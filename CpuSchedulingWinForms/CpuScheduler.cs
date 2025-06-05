@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Zen.Barcode;
-using System.Drawing.Imaging;
-using System.IO;
 
 namespace CpuSchedulingWinForms
 {
@@ -21,9 +18,6 @@ namespace CpuSchedulingWinForms
             this.sidePanel.Height = btnDashBoard.Height;
             this.sidePanel.Top = btnDashBoard.Top;
 
-            //this.btnProductCode.BackColor = Color.Transparent;
-            //this.btnCpuScheduler.BackColor = Color.Transparent;
-            //this.btnDashBoard.BackColor = Color.DimGray;
         }
 
         private void btnCpuScheduler_Click(object sender, EventArgs e)
@@ -33,9 +27,6 @@ namespace CpuSchedulingWinForms
             this.sidePanel.Height = btnCpuScheduler.Height;
             this.sidePanel.Top = btnCpuScheduler.Top;
 
-            //this.btnProductCode.BackColor = Color.Transparent;         
-            //this.btnDashBoard.BackColor = Color.Transparent;
-            //this.btnCpuScheduler.BackColor = Color.DimGray;
         }
 
 
@@ -187,89 +178,7 @@ namespace CpuSchedulingWinForms
             cpuScheduler.ShowDialog();
         }
 
-        private void btnBarcode_Click(object sender, EventArgs e)
-        {
-            if (txtCodeInput.Text != "")
-            {
-                string barcode = txtCodeInput.Text;
-                //Code128BarcodeDraw barcode = BarcodeDrawFactory.Code128WithChecksum;
-                //pictureBoxCodeOutput.Image = barcode.Draw(barcodeInput, 30);
-                //pictureBoxCodeOutput.Height = barcode.Draw(txtCodeInput.Text, 150).Height;
-                //pictureBoxCodeOutput.Width = barcode.Draw(txtCodeInput.Text, 150).Width;
 
-                Bitmap bitmap = new Bitmap(barcode.Length * 36, 109);   //40, 150
-                using (Graphics graphics = Graphics.FromImage(bitmap))
-                {
-                    Font font = new Font(FontFamily.GenericMonospace, 25);
-                    PointF point = new PointF(2f, 2f);
-                    SolidBrush black = new SolidBrush(Color.Black);
-                    SolidBrush white = new SolidBrush(Color.White);
-                    graphics.FillRectangle(white, 0, 0, bitmap.Width, bitmap.Height);
-                    graphics.DrawString(barcode, font, black, point);
-                }
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-                    bitmap.Save(memoryStream, ImageFormat.Png);
-                    pictureBoxCodeOutput.Image = bitmap;
-                    //pictureBoxCodeOutput.Height = bitmap.Height;
-                    //pictureBoxCodeOutput.Width = bitmap.Width;
-                }
-            }
-            else
-            {
-                MessageBox.Show("No Input", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtCodeInput.Focus();
-            }
-
-        }
-
-        private void btnQrcode_Click(object sender, EventArgs e)
-        {
-            if (txtCodeInput.Text != "")
-            {
-                CodeQrBarcodeDraw codeQr = BarcodeDrawFactory.CodeQr;
-                pictureBoxCodeOutput.Image = codeQr.Draw(txtCodeInput.Text, 100);
-                //string barcode = txtCodeInput.Text;
-                //Bitmap bitmap = new Bitmap(barcode.Length * 40, 150);
-                //pictureBoxCodeOutput.Image = bitmap; 
-            }
-            else
-            {
-                MessageBox.Show("No Input", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtCodeInput.Focus();
-            }
-
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            if (pictureBoxCodeOutput.Image == null)
-            {
-                return;
-            }
-            else if (pictureBoxCodeOutput.Image != null)
-            {
-                using (SaveFileDialog saveFileDialog = new SaveFileDialog() { Filter = "PNG|*.png|JPEG|*.jpeg|ICON|*.ico" })
-                {
-                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        pictureBoxCodeOutput.Image.Save(saveFileDialog.FileName);
-                    }
-                }
-            }
-        }
-
-        private void btnProductCode_Click(object sender, EventArgs e)
-        {
-            //this.dashBoardTab.Show();
-            this.tabSelection.SelectTab(2);
-            this.sidePanel.Height = btnProductCode.Height;
-            this.sidePanel.Top = btnProductCode.Top;
-
-            //this.btnCpuScheduler.BackColor = Color.Transparent;
-            //this.btnDashBoard.BackColor = Color.Transparent;
-            //this.btnProductCode.BackColor = Color.DimGray;
-        }
 
         private void CpuScheduler_Load(object sender, EventArgs e)
         {
@@ -350,9 +259,5 @@ namespace CpuSchedulingWinForms
             }
         }
 
-        private void txtCodeInput_Click(object sender, EventArgs e)
-        {
-            this.txtCodeInput.Clear();
-        }
     }
 }

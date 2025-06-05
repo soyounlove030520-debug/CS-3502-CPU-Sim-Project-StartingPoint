@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CpuScheduler));
             this.panel1 = new System.Windows.Forms.Panel();
             this.sidePanel = new System.Windows.Forms.Panel();
-            this.btnProductCode = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnCpuScheduler = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -56,12 +55,6 @@
             this.btnFCFS = new System.Windows.Forms.Button();
             this.txtProcess = new System.Windows.Forms.TextBox();
             this.labelProcess = new System.Windows.Forms.Label();
-            this.productTab = new System.Windows.Forms.TabPage();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnQrcode = new System.Windows.Forms.Button();
-            this.txtCodeInput = new System.Windows.Forms.TextBox();
-            this.pictureBoxCodeOutput = new System.Windows.Forms.PictureBox();
-            this.btnBarcode = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -71,8 +64,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.cpuSchedulerTab.SuspendLayout();
-            this.productTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCodeOutput)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -80,7 +71,6 @@
             this.panel1.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.sidePanel);
-            this.panel1.Controls.Add(this.btnProductCode);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.btnCpuScheduler);
             this.panel1.Controls.Add(this.pictureBox1);
@@ -98,23 +88,7 @@
             this.sidePanel.Size = new System.Drawing.Size(10, 45);
             this.sidePanel.TabIndex = 4;
             // 
-            // btnProductCode
             // 
-            this.btnProductCode.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnProductCode.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnProductCode.FlatAppearance.BorderSize = 0;
-            this.btnProductCode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnProductCode.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnProductCode.Image = ((System.Drawing.Image)(resources.GetObject("btnProductCode.Image")));
-            this.btnProductCode.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnProductCode.Location = new System.Drawing.Point(11, 258);
-            this.btnProductCode.Name = "btnProductCode";
-            this.btnProductCode.Size = new System.Drawing.Size(150, 40);
-            this.btnProductCode.TabIndex = 4;
-            this.btnProductCode.Text = "    Code Generator";
-            this.btnProductCode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnProductCode.UseVisualStyleBackColor = true;
-            this.btnProductCode.Click += new System.EventHandler(this.btnProductCode_Click);
             // 
             // label1
             // 
@@ -180,7 +154,6 @@
             // 
             this.tabSelection.Controls.Add(this.dashBoardTab);
             this.tabSelection.Controls.Add(this.cpuSchedulerTab);
-            this.tabSelection.Controls.Add(this.productTab);
             this.tabSelection.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabSelection.Location = new System.Drawing.Point(171, 1);
             this.tabSelection.Name = "tabSelection";
@@ -437,88 +410,15 @@
             this.labelProcess.TabIndex = 6;
             this.labelProcess.Text = "Number of Processes:";
             // 
-            // productTab
             // 
-            this.productTab.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.productTab.Controls.Add(this.btnSave);
-            this.productTab.Controls.Add(this.btnQrcode);
-            this.productTab.Controls.Add(this.txtCodeInput);
-            this.productTab.Controls.Add(this.pictureBoxCodeOutput);
-            this.productTab.Controls.Add(this.btnBarcode);
-            this.productTab.Location = new System.Drawing.Point(4, 22);
-            this.productTab.Name = "productTab";
-            this.productTab.Size = new System.Drawing.Size(501, 413);
-            this.productTab.TabIndex = 2;
-            this.productTab.Text = "Product Code ";
             // 
-            // btnSave
             // 
-            this.btnSave.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnSave.BackgroundImage")));
-            this.btnSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnSave.Location = new System.Drawing.Point(434, 3);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(44, 37);
-            this.btnSave.TabIndex = 4;
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // btnQrcode
             // 
-            this.btnQrcode.BackColor = System.Drawing.Color.Tan;
-            this.btnQrcode.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnQrcode.FlatAppearance.BorderColor = System.Drawing.SystemColors.InactiveBorder;
-            this.btnQrcode.FlatAppearance.MouseOverBackColor = System.Drawing.Color.PaleGreen;
-            this.btnQrcode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQrcode.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnQrcode.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnQrcode.Location = new System.Drawing.Point(357, 359);
-            this.btnQrcode.Name = "btnQrcode";
-            this.btnQrcode.Size = new System.Drawing.Size(122, 36);
-            this.btnQrcode.TabIndex = 3;
-            this.btnQrcode.Text = "Generate Qrcode";
-            this.btnQrcode.UseVisualStyleBackColor = false;
-            this.btnQrcode.Click += new System.EventHandler(this.btnQrcode_Click);
             // 
-            // txtCodeInput
-            // 
-            this.txtCodeInput.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCodeInput.Location = new System.Drawing.Point(109, 310);
-            this.txtCodeInput.Multiline = true;
-            this.txtCodeInput.Name = "txtCodeInput";
-            this.txtCodeInput.Size = new System.Drawing.Size(369, 28);
-            this.txtCodeInput.TabIndex = 2;
-            this.txtCodeInput.Text = "Enter text to be generated as code";
-            this.txtCodeInput.Click += new System.EventHandler(this.txtCodeInput_Click);
-            // 
-            // pictureBoxCodeOutput
-            // 
-            this.pictureBoxCodeOutput.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBoxCodeOutput.Location = new System.Drawing.Point(25, 46);
-            this.pictureBoxCodeOutput.Name = "pictureBoxCodeOutput";
-            this.pictureBoxCodeOutput.Size = new System.Drawing.Size(453, 231);
-            this.pictureBoxCodeOutput.TabIndex = 1;
-            this.pictureBoxCodeOutput.TabStop = false;
-            // 
-            // btnBarcode
-            // 
-            this.btnBarcode.BackColor = System.Drawing.Color.Tan;
-            this.btnBarcode.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnBarcode.FlatAppearance.BorderColor = System.Drawing.SystemColors.InactiveBorder;
-            this.btnBarcode.FlatAppearance.MouseOverBackColor = System.Drawing.Color.PaleGreen;
-            this.btnBarcode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBarcode.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBarcode.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnBarcode.Location = new System.Drawing.Point(189, 359);
-            this.btnBarcode.Name = "btnBarcode";
-            this.btnBarcode.Size = new System.Drawing.Size(133, 36);
-            this.btnBarcode.TabIndex = 0;
-            this.btnBarcode.Text = "Generate Barcode";
-            this.btnBarcode.UseVisualStyleBackColor = false;
-            this.btnBarcode.Click += new System.EventHandler(this.btnBarcode_Click);
             // 
             // timer1
-            // 
+            //
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // CpuScheduler
@@ -545,9 +445,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.cpuSchedulerTab.ResumeLayout(false);
             this.cpuSchedulerTab.PerformLayout();
-            this.productTab.ResumeLayout(false);
-            this.productTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCodeOutput)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -564,19 +461,12 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.TabPage cpuSchedulerTab;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TabPage productTab;
         private System.Windows.Forms.Label restartApp;
         private System.Windows.Forms.Button btnPriority;
         private System.Windows.Forms.Button btnSJF;
         private System.Windows.Forms.Button btnFCFS;
         public System.Windows.Forms.TextBox txtProcess;
         private System.Windows.Forms.Label labelProcess;
-        private System.Windows.Forms.Button btnQrcode;
-        private System.Windows.Forms.TextBox txtCodeInput;
-        private System.Windows.Forms.PictureBox pictureBoxCodeOutput;
-        private System.Windows.Forms.Button btnBarcode;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnProductCode;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Panel sidePanel;
         private System.Windows.Forms.Button btnExit;
