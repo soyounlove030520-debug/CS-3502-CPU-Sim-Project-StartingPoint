@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CpuSchedulingWinForms
@@ -17,7 +13,7 @@ namespace CpuSchedulingWinForms
             double[] bp = new double[np];
             double[] wtp = new double[np];
             string[] output1 = new string[npX2];
-            double twt = 0.0, awt; 
+            double twt = 0.0, awt;
             int num;
 
             DialogResult result = MessageBox.Show("First Come First Serve Scheduling ", "", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
@@ -75,7 +71,7 @@ namespace CpuSchedulingWinForms
             double[] bp = new double[np];
             double[] wtp = new double[np];
             double[] p = new double[np];
-            double twt = 0.0, awt; 
+            double twt = 0.0, awt;
             int x, num;
             double temp = 0.0;
             bool found = false;
@@ -318,7 +314,7 @@ namespace CpuSchedulingWinForms
                         MessageBox.Show("Turnaround time for Process " + (i + 1) + " : " + (total - arrivalTime[i]), "Turnaround time for Process " + (i + 1), MessageBoxButtons.OK);
                         MessageBox.Show("Wait time for Process " + (i + 1) + " : " + (total - arrivalTime[i] - burstTime[i]), "Wait time for Process " + (i + 1), MessageBoxButtons.OK);
                         turnaroundTime = (turnaroundTime + total - arrivalTime[i]);
-                        waitTime = (waitTime + total - arrivalTime[i] - burstTime[i]);                        
+                        waitTime = (waitTime + total - arrivalTime[i] - burstTime[i]);
                         counter = 0;
                     }
                     if (i == np - 1)

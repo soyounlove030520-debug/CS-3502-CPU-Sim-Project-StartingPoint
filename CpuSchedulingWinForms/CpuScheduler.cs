@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Zen.Barcode;
 using System.Drawing.Imaging;
@@ -68,7 +62,7 @@ namespace CpuSchedulingWinForms
 
                 listView1.Clear();
                 listView1.View = View.Details;
-                
+
                 listView1.Columns.Add("Process ID", 150, HorizontalAlignment.Center);
                 listView1.Columns.Add("Quantum Time", 100, HorizontalAlignment.Center);
 
@@ -115,7 +109,7 @@ namespace CpuSchedulingWinForms
 
                 listView1.Clear();
                 listView1.View = View.Details;
-               
+
                 listView1.Columns.Add("Process ID", 150, HorizontalAlignment.Center);
                 listView1.Columns.Add("Quantum Time", 100, HorizontalAlignment.Center);
 
@@ -126,7 +120,7 @@ namespace CpuSchedulingWinForms
                     item.SubItems.Add("-");
                     listView1.Items.Add(item);
                 }
-                
+
                 listView1.Items.Add("\n");
                 listView1.Items.Add("CPU handles: " + numberOfProcess);
             }
@@ -226,7 +220,7 @@ namespace CpuSchedulingWinForms
                 MessageBox.Show("No Input", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtCodeInput.Focus();
             }
-            
+
         }
 
         private void btnQrcode_Click(object sender, EventArgs e)
@@ -255,14 +249,14 @@ namespace CpuSchedulingWinForms
             }
             else if (pictureBoxCodeOutput.Image != null)
             {
-                using (SaveFileDialog saveFileDialog = new SaveFileDialog() { Filter = "PNG|*.png|JPEG|*.jpeg|ICON|*.ico"})
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog() { Filter = "PNG|*.png|JPEG|*.jpeg|ICON|*.ico" })
                 {
                     if (saveFileDialog.ShowDialog() == DialogResult.OK)
                     {
                         pictureBoxCodeOutput.Image.Save(saveFileDialog.FileName);
                     }
                 }
-            }           
+            }
         }
 
         private void btnProductCode_Click(object sender, EventArgs e)
@@ -271,7 +265,7 @@ namespace CpuSchedulingWinForms
             this.tabSelection.SelectTab(2);
             this.sidePanel.Height = btnProductCode.Height;
             this.sidePanel.Top = btnProductCode.Top;
-            
+
             //this.btnCpuScheduler.BackColor = Color.Transparent;
             //this.btnDashBoard.BackColor = Color.Transparent;
             //this.btnProductCode.BackColor = Color.DimGray;
@@ -345,10 +339,11 @@ namespace CpuSchedulingWinForms
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if(this.Opacity > 0.0)
+            if (this.Opacity > 0.0)
             {
                 this.Opacity -= 0.021;
-            } else
+            }
+            else
             {
                 timer1.Stop();
                 Application.Exit();

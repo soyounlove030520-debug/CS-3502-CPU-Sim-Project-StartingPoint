@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.VisualBasic;
 
 namespace CpuSchedulingWinForms
 {
-    public  partial class Form1 : Form
+    public partial class Form1 : Form
     {
 
         public Form1()
@@ -32,7 +24,7 @@ namespace CpuSchedulingWinForms
             }
 
         }
-    
+
 
         private void label1_Click(object sender, EventArgs e)
         {
@@ -58,7 +50,8 @@ namespace CpuSchedulingWinForms
             if (txtProcess.Text != "")
             {
                 Algorithms.priorityAlgorithm(txtProcess.Text);
-            } else
+            }
+            else
             {
                 MessageBox.Show("Enter number of processes", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtProcess.Focus();
