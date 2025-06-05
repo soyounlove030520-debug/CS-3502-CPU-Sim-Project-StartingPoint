@@ -1,17 +1,25 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace CpuSchedulingWinForms
 {
-    public partial class CpuScheduler : Form
+    /// <summary>
+    /// Main form for demonstrating CPU scheduling algorithms.
+    /// </summary>
+    public partial class CpuSchedulerForm : Form
     {
-        public CpuScheduler()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CpuSchedulerForm"/> class.
+        /// </summary>
+        public CpuSchedulerForm()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Handles dashboard navigation.
+        /// </summary>
+        private void DashBoardButton_Click(object sender, EventArgs e)
         {
             //dashBoardTab.Show();
             this.tabSelection.SelectTab(0);
@@ -20,7 +28,10 @@ namespace CpuSchedulingWinForms
 
         }
 
-        private void btnCpuScheduler_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Navigates to the CPU scheduler tab.
+        /// </summary>
+        private void CpuSchedulerButton_Click(object sender, EventArgs e)
         {
             //this.dashBoardTab.Show();
             this.tabSelection.SelectTab(1);
@@ -30,7 +41,10 @@ namespace CpuSchedulingWinForms
         }
 
 
-        private void btnFCFS_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Executes the First-Come, First-Served algorithm.
+        /// </summary>
+        private void FirstComeFirstServeButton_Click(object sender, EventArgs e)
         {
             if (txtProcess.Text != "")
             {
@@ -43,7 +57,7 @@ namespace CpuSchedulingWinForms
                     this.progressBar2.Increment(13);
                     this.progressBar2.SetState(1);
                 }
-                else if (numberOfProcess > 10)
+                else if (processCount > 10)
                 {
                     this.progressBar1.Increment(15);
                     this.progressBar1.SetState(1);
@@ -57,7 +71,7 @@ namespace CpuSchedulingWinForms
                 listView1.Columns.Add("Process ID", 150, HorizontalAlignment.Center);
                 listView1.Columns.Add("Quantum Time", 100, HorizontalAlignment.Center);
 
-                for (int i = 0; i < numberOfProcess; i++)
+                for (int i = 0; i < processCount; i++)
                 {
                     //listBoxProcess.Items.Add(" Process " + (i + 1));
                     var item = new ListViewItem();
@@ -66,9 +80,9 @@ namespace CpuSchedulingWinForms
                     listView1.Items.Add(item);
                 }
                 //listBoxProcess.Items.Add("\n");
-                //listBoxProcess.Items.Add(" Total number of processes executed: " + numberOfProcess);
+                //listBoxProcess.Items.Add(" Total number of processes executed: " + processCount);
                 listView1.Items.Add("\n");
-                listView1.Items.Add("CPU handles: " + numberOfProcess);
+                listView1.Items.Add("CPU handles: " + processCount);
             }
             else
             {
@@ -77,7 +91,10 @@ namespace CpuSchedulingWinForms
             }
         }
 
-        private void btnSJF_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Executes the Shortest Job First algorithm.
+        /// </summary>
+        private void ShortestJobFirstButton_Click(object sender, EventArgs e)
         {
             if (txtProcess.Text != "")
             {
@@ -90,7 +107,7 @@ namespace CpuSchedulingWinForms
                     this.progressBar2.Increment(13);
                     this.progressBar2.SetState(1);
                 }
-                else if (numberOfProcess > 10)
+                else if (processCount > 10)
                 {
                     this.progressBar1.Increment(15);
                     this.progressBar1.SetState(1);
@@ -104,7 +121,7 @@ namespace CpuSchedulingWinForms
                 listView1.Columns.Add("Process ID", 150, HorizontalAlignment.Center);
                 listView1.Columns.Add("Quantum Time", 100, HorizontalAlignment.Center);
 
-                for (int i = 0; i < numberOfProcess; i++)
+                for (int i = 0; i < processCount; i++)
                 {
                     var item = new ListViewItem();
                     item.Text = "Process " + (i + 1);
@@ -113,7 +130,7 @@ namespace CpuSchedulingWinForms
                 }
 
                 listView1.Items.Add("\n");
-                listView1.Items.Add("CPU handles: " + numberOfProcess);
+                listView1.Items.Add("CPU handles: " + processCount);
             }
             else
             {
@@ -122,7 +139,10 @@ namespace CpuSchedulingWinForms
             }
         }
 
-        private void btnPriority_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Executes the Priority algorithm.
+        /// </summary>
+        private void PriorityButton_Click(object sender, EventArgs e)
         {
             if (txtProcess.Text != "")
             {
@@ -135,7 +155,7 @@ namespace CpuSchedulingWinForms
                     this.progressBar2.Increment(13);
                     this.progressBar2.SetState(1);
                 }
-                else if (numberOfProcess > 10)
+                else if (processCount > 10)
                 {
                     this.progressBar1.Increment(15);
                     this.progressBar1.SetState(1);
@@ -148,7 +168,7 @@ namespace CpuSchedulingWinForms
                 listView1.Columns.Add("Process ID", 150, HorizontalAlignment.Center);
                 listView1.Columns.Add("Quantum Time", 100, HorizontalAlignment.Center);
 
-                for (int i = 0; i < numberOfProcess; i++)
+                for (int i = 0; i < processCount; i++)
                 {
                     var item = new ListViewItem();
                     item.Text = "Process " + (i + 1);
@@ -157,7 +177,7 @@ namespace CpuSchedulingWinForms
                 }
 
                 listView1.Items.Add("\n");
-                listView1.Items.Add("CPU handles : " + numberOfProcess);
+                listView1.Items.Add("CPU handles : " + processCount);
             }
             else
             {
@@ -166,21 +186,30 @@ namespace CpuSchedulingWinForms
             }
         }
 
-        private void txtProcess_TextChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Occurs when the process count text changes.
+        /// </summary>
+        private void ProcessTextBox_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void restartApp_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Restarts the application.
+        /// </summary>
+        private void RestartApp_Click(object sender, EventArgs e)
         {
             this.Hide();
-            CpuScheduler cpuScheduler = new CpuScheduler();
+            CpuSchedulerForm cpuScheduler = new CpuSchedulerForm();
             cpuScheduler.ShowDialog();
         }
 
 
 
-        private void CpuScheduler_Load(object sender, EventArgs e)
+        /// <summary>
+        /// Handles form load logic.
+        /// </summary>
+        private void CpuSchedulerForm_Load(object sender, EventArgs e)
         {
             this.sidePanel.Height = btnDashBoard.Height;
             this.sidePanel.Top = btnDashBoard.Top;
@@ -190,18 +219,27 @@ namespace CpuSchedulingWinForms
             listView1.GridLines = true;
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        /// <summary>
+        /// Begins the fade out sequence and exits the application.
+        /// </summary>
+        private void ExitButton_Click(object sender, EventArgs e)
         {
             //Application.Exit();
             timer1.Start();
         }
 
-        private void pictureBox4_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Placeholder event for an unused picture box.
+        /// </summary>
+        private void PictureBox4_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void btnRoundRobin_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Executes the Round Robin algorithm.
+        /// </summary>
+        private void RoundRobinButton_Click(object sender, EventArgs e)
         {
             if (txtProcess.Text != "")
             {
@@ -214,7 +252,7 @@ namespace CpuSchedulingWinForms
                     this.progressBar2.Increment(13);
                     this.progressBar2.SetState(1);
                 }
-                else if (numberOfProcess > 10)
+                else if (processCount > 10)
                 {
                     this.progressBar1.Increment(15);
                     this.progressBar1.SetState(1);
@@ -228,7 +266,7 @@ namespace CpuSchedulingWinForms
                 listView1.Columns.Add("Process ID", 150, HorizontalAlignment.Center);
                 listView1.Columns.Add("Quantum Time", 100, HorizontalAlignment.Center);
 
-                for (int i = 0; i < numberOfProcess; i++)
+                for (int i = 0; i < processCount; i++)
                 {
                     var item = new ListViewItem();
                     item.Text = "Process " + (i + 1);
@@ -237,7 +275,7 @@ namespace CpuSchedulingWinForms
                 }
 
                 listView1.Items.Add("\n");
-                listView1.Items.Add("CPU handles: " + numberOfProcess);
+                listView1.Items.Add("CPU handles: " + processCount);
             }
             else
             {
@@ -246,7 +284,10 @@ namespace CpuSchedulingWinForms
             }
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        /// <summary>
+        /// Handles opacity fade out then closes the application.
+        /// </summary>
+        private void FadeOutTimer_Tick(object sender, EventArgs e)
         {
             if (this.Opacity > 0.0)
             {

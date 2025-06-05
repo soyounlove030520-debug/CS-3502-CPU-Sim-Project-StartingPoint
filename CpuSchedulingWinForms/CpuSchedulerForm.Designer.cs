@@ -1,6 +1,6 @@
 ﻿namespace CpuSchedulingWinForms
 {
-    partial class CpuScheduler
+    partial class CpuSchedulerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CpuScheduler));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CpuSchedulerForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.sidePanel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -116,7 +116,7 @@
             this.btnCpuScheduler.Text = "    CPU Scheduler";
             this.btnCpuScheduler.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCpuScheduler.UseVisualStyleBackColor = true;
-            this.btnCpuScheduler.Click += new System.EventHandler(this.btnCpuScheduler_Click);
+            this.btnCpuScheduler.Click += new System.EventHandler(this.CpuSchedulerButton_Click);
             // 
             // pictureBox1
             // 
@@ -148,7 +148,7 @@
             this.btnDashBoard.Text = "    Dashboard";
             this.btnDashBoard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnDashBoard.UseVisualStyleBackColor = false;
-            this.btnDashBoard.Click += new System.EventHandler(this.button1_Click);
+            this.btnDashBoard.Click += new System.EventHandler(this.DashBoardButton_Click);
             // 
             // tabSelection
             // 
@@ -245,7 +245,7 @@
             this.btnExit.Text = " Close";
             this.btnExit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnExit.UseVisualStyleBackColor = false;
-            this.btnExit.Click += new System.EventHandler(this.button1_Click_1);
+            this.btnExit.Click += new System.EventHandler(this.ExitButton_Click);
             // 
             // pictureBox3
             // 
@@ -268,7 +268,7 @@
             this.pictureBox4.Size = new System.Drawing.Size(501, 296);
             this.pictureBox4.TabIndex = 2;
             this.pictureBox4.TabStop = false;
-            this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
+            this.pictureBox4.Click += new System.EventHandler(this.PictureBox4_Click);
             // 
             // pictureBox2
             // 
@@ -318,7 +318,7 @@
             this.btnRoundRobin.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnRoundRobin.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnRoundRobin.UseVisualStyleBackColor = false;
-            this.btnRoundRobin.Click += new System.EventHandler(this.btnRoundRobin_Click);
+            this.btnRoundRobin.Click += new System.EventHandler(this.RoundRobinButton_Click);
             // 
             // restartApp
             // 
@@ -331,7 +331,7 @@
             this.restartApp.Size = new System.Drawing.Size(113, 15);
             this.restartApp.TabIndex = 11;
             this.restartApp.Text = "Restart Application";
-            this.restartApp.Click += new System.EventHandler(this.restartApp_Click);
+            this.restartApp.Click += new System.EventHandler(this.RestartApp_Click);
             // 
             // btnPriority
             // 
@@ -350,7 +350,7 @@
             this.btnPriority.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnPriority.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnPriority.UseVisualStyleBackColor = false;
-            this.btnPriority.Click += new System.EventHandler(this.btnPriority_Click);
+            this.btnPriority.Click += new System.EventHandler(this.PriorityButton_Click);
             // 
             // btnSJF
             // 
@@ -369,7 +369,7 @@
             this.btnSJF.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSJF.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSJF.UseVisualStyleBackColor = false;
-            this.btnSJF.Click += new System.EventHandler(this.btnSJF_Click);
+            this.btnSJF.Click += new System.EventHandler(this.ShortestJobFirstButton_Click);
             // 
             // btnFCFS
             // 
@@ -388,7 +388,7 @@
             this.btnFCFS.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnFCFS.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnFCFS.UseVisualStyleBackColor = false;
-            this.btnFCFS.Click += new System.EventHandler(this.btnFCFS_Click);
+            this.btnFCFS.Click += new System.EventHandler(this.FirstComeFirstServeButton_Click);
             // 
             // txtProcess
             // 
@@ -399,7 +399,7 @@
             this.txtProcess.Size = new System.Drawing.Size(249, 33);
             this.txtProcess.TabIndex = 7;
             this.txtProcess.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtProcess.TextChanged += new System.EventHandler(this.txtProcess_TextChanged);
+            this.txtProcess.TextChanged += new System.EventHandler(this.ProcessTextBox_TextChanged);
             // 
             // labelProcess
             // 
@@ -412,9 +412,9 @@
             // 
             // timer1
             //
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timer1.Tick += new System.EventHandler(this.FadeOutTimer_Tick);
             // 
-            // CpuScheduler
+            // CpuSchedulerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -424,9 +424,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "CpuScheduler";
+            this.Name = "CpuSchedulerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Load += new System.EventHandler(this.CpuScheduler_Load);
+            this.Load += new System.EventHandler(this.CpuSchedulerForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
