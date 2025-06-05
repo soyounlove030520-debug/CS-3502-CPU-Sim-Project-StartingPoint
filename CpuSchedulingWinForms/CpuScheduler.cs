@@ -34,7 +34,7 @@ namespace CpuSchedulingWinForms
         {
             if (txtProcess.Text != "")
             {
-                Algorithms.fcfsAlgorithm(txtProcess.Text);
+                Algorithms.RunFirstComeFirstServe(txtProcess.Text);
                 int numberOfProcess = Int16.Parse(txtProcess.Text);
                 if (numberOfProcess <= 10)
                 {
@@ -81,7 +81,7 @@ namespace CpuSchedulingWinForms
         {
             if (txtProcess.Text != "")
             {
-                Algorithms.sjfAlgorithm(txtProcess.Text);
+                Algorithms.RunShortestJobFirst(txtProcess.Text);
                 int numberOfProcess = Int16.Parse(txtProcess.Text);
                 if (numberOfProcess <= 10)
                 {
@@ -126,7 +126,7 @@ namespace CpuSchedulingWinForms
         {
             if (txtProcess.Text != "")
             {
-                Algorithms.priorityAlgorithm(txtProcess.Text);
+                Algorithms.RunPriorityScheduling(txtProcess.Text);
                 int numberOfProcess = Int16.Parse(txtProcess.Text);
                 if (numberOfProcess <= 10)
                 {
@@ -205,7 +205,7 @@ namespace CpuSchedulingWinForms
         {
             if (txtProcess.Text != "")
             {
-                Algorithms.roundRobinAlgorithm(txtProcess.Text);
+                Algorithms.RunRoundRobin(txtProcess.Text);
                 int numberOfProcess = Int16.Parse(txtProcess.Text);
                 if (numberOfProcess <= 10)
                 {
