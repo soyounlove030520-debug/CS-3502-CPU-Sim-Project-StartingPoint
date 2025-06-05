@@ -13,7 +13,7 @@ namespace CpuSchedulingWinForms
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CpuScheduler());
+            Application.Run(new CpuSchedulerForm());
         }
     }
 }
