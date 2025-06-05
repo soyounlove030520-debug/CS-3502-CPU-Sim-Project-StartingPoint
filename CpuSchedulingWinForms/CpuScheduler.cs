@@ -206,7 +206,7 @@ namespace CpuSchedulingWinForms
                 Bitmap bitmap = new Bitmap(barcode.Length * 36, 109);   //40, 150
                 using (Graphics graphics = Graphics.FromImage(bitmap))
                 {
-                    Font font = new Font("IDAutomationHC39M Free Version", 25);
+                    Font font = new Font(FontFamily.GenericMonospace, 25);
                     PointF point = new PointF(2f, 2f);
                     SolidBrush black = new SolidBrush(Color.Black);
                     SolidBrush white = new SolidBrush(Color.White);
