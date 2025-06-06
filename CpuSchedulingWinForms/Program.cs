@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CpuSchedulingWinForms
@@ -16,7 +13,7 @@ namespace CpuSchedulingWinForms
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CpuScheduler());
+            Application.Run(new CpuSchedulerForm());
         }
     }
 }
