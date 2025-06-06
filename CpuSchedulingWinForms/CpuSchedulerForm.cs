@@ -49,8 +49,8 @@ namespace CpuSchedulingWinForms
             if (txtProcess.Text != "")
             {
                 Algorithms.RunFirstComeFirstServe(txtProcess.Text);
-                int numberOfProcess = Int16.Parse(txtProcess.Text);
-                if (numberOfProcess <= 10)
+                int processCount = Int16.Parse(txtProcess.Text);
+                if (processCount <= 10)
                 {
                     this.progressBar1.Increment(4); //cpu progress bar
                     this.progressBar1.SetState(1);
@@ -99,8 +99,8 @@ namespace CpuSchedulingWinForms
             if (txtProcess.Text != "")
             {
                 Algorithms.RunShortestJobFirst(txtProcess.Text);
-                int numberOfProcess = Int16.Parse(txtProcess.Text);
-                if (numberOfProcess <= 10)
+                int processCount = Int16.Parse(txtProcess.Text);
+                if (processCount <= 10)
                 {
                     this.progressBar1.Increment(4); //cpu progress bar
                     this.progressBar1.SetState(1);
@@ -147,8 +147,8 @@ namespace CpuSchedulingWinForms
             if (txtProcess.Text != "")
             {
                 Algorithms.RunPriorityScheduling(txtProcess.Text);
-                int numberOfProcess = Int16.Parse(txtProcess.Text);
-                if (numberOfProcess <= 10)
+                int processCount = Int16.Parse(txtProcess.Text);
+                if (processCount <= 10)
                 {
                     this.progressBar1.Increment(4); //cpu progress bar
                     this.progressBar1.SetState(1);  //cpu color progress bar
@@ -244,8 +244,8 @@ namespace CpuSchedulingWinForms
             if (txtProcess.Text != "")
             {
                 Algorithms.RunRoundRobin(txtProcess.Text);
-                int numberOfProcess = Int16.Parse(txtProcess.Text);
-                if (numberOfProcess <= 10)
+                int processCount = Int16.Parse(txtProcess.Text);
+                if (processCount <= 10)
                 {
                     this.progressBar1.Increment(4); //cpu progress bar
                     this.progressBar1.SetState(1);  //cpu color progress bar
