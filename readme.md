@@ -23,20 +23,26 @@ Additional algorithms can easily be added by extending `Algorithms.cs`.
 
 ## How to run
 
-1. Clone the repository:
+1. Clone the repository using SSH:
+
    ```bash
-   git clone <repository-url>
+   git clone git@github.com:iAmGiG/CS-3502-CPU-Sim-Project-StartingPoint.git
    ```
+
 2. Open `CpuSchedulingWinForms.sln` in Visual Studio and build the solution. Alternatively, use the .NET CLI:
+
    ```bash
    dotnet build CpuSchedulingWinForms.sln
    ```
+
 3. Run the application:
+
    ```bash
    dotnet run --project CpuSchedulingWinForms/CpuSchedulingWinForms.csproj
    ```
+
 4. Enter the desired number of processes and choose a scheduling algorithm from the interface. The app will prompt for additional values as needed (burst time, priority, quantum time, etc.) and display the results.
 
 ### License
 
-This project is licensed under the terms of the [MIT license](https://choosealicense.com/licenses/mit/).
+This project is licensed under the terms of the [MIT license](LICENSE.txt).
