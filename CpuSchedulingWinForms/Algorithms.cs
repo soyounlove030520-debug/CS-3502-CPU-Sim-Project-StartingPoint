@@ -169,7 +169,7 @@ namespace CpuSchedulingWinForms
                     "Average waiting time",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
-                }
+            }
         }
 
         /// <summary>
@@ -350,11 +350,10 @@ namespace CpuSchedulingWinForms
                     if (remainingTimes[index] == 0 && counter == 1)
                     {
                         remainingProcesses--;
-                        //printf("nProcess[%d]tt%dtt %dttt %d", i + 1, burst_time[i], total - arrival_time[i], total - arrival_time[i] - burst_time[i]);
                         MessageBox.Show("Turnaround time for Process " + (index + 1) + " : " + (total - arrivalTimes[index]), "Turnaround time for Process " + (index + 1), MessageBoxButtons.OK);
                         MessageBox.Show("Wait time for Process " + (index + 1) + " : " + (total - arrivalTimes[index] - burstTimes[index]), "Wait time for Process " + (index + 1), MessageBoxButtons.OK);
-                        turnaroundTime = (turnaroundTime + total - arrivalTimes[index]);
-                        waitTime = (waitTime + total - arrivalTimes[index] - burstTimes[index]);
+                        turnaroundTime = turnaroundTime + total - arrivalTimes[index];
+                        waitTime = waitTime + total - arrivalTimes[index] - burstTimes[index];
                         counter = 0;
                     }
                     if (index == processCount - 1)
