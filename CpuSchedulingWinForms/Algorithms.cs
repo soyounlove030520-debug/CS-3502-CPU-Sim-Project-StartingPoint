@@ -23,15 +23,12 @@ namespace CpuSchedulingWinForms
                 "First Come First Serve Scheduling",
                 string.Empty,
                 MessageBoxButtons.YesNo,
-                MessageBoxIcon.Information);
+                    MessageBoxIcon.Information);
 
             if (result == DialogResult.Yes)
             {
                 for (i = 0; i < processCount; i++)
                 {
-                    //MessageBox.Show("Enter Burst time for P" + (num + 1) + ":", "Burst time for Process", MessageBoxButtons.OK, MessageBoxIcon.Question);
-                    //Console.WriteLine("\nEnter Burst time for P" + (num + 1) + ":");
-
                     string input = Microsoft.VisualBasic.Interaction.InputBox(
                         "Enter Burst time:",
                         "Burst time for P" + (i + 1),
@@ -41,8 +38,6 @@ namespace CpuSchedulingWinForms
 
                     burstTimes[i] = Convert.ToInt64(input);
 
-                    //var input = Console.ReadLine();
-                    //bp[num] = Convert.ToInt32(input);
                 }
 
                 for (i = 0; i < processCount; i++)
@@ -72,12 +67,6 @@ namespace CpuSchedulingWinForms
                     MessageBoxButtons.OK,
                     MessageBoxIcon.None);
             }
-            else if (result == DialogResult.No)
-            {
-                //this.Hide();
-                //Form1 frm = new Form1();
-                //frm.ShowDialog();
-            }
         }
 
         /// <summary>
@@ -101,7 +90,7 @@ namespace CpuSchedulingWinForms
                 "Shortest Job First Scheduling",
                 string.Empty,
                 MessageBoxButtons.YesNo,
-                MessageBoxIcon.Information);
+                    MessageBoxIcon.Information);
 
             if (result == DialogResult.Yes)
             {
@@ -180,7 +169,7 @@ namespace CpuSchedulingWinForms
                     "Average waiting time",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
-            }
+                }
         }
 
         /// <summary>
@@ -291,12 +280,6 @@ namespace CpuSchedulingWinForms
                     "Average waiting time",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
-                //Console.WriteLine("\n\nAverage waiting time: " + (awt = twt / np));
-                //Console.ReadLine();
-            }
-            else
-            {
-                //this.Hide();
             }
         }
 
