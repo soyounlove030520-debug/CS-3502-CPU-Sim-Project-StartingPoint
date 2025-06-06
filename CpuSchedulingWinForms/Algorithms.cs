@@ -291,7 +291,7 @@ namespace CpuSchedulingWinForms
         {
             int processCount = Convert.ToInt16(processCountInput);
             int index, counter = 0;
-            double total = 0.0;
+            double total;
             double timeQuantum;
             double waitTime = 0, turnaroundTime = 0;
             double averageWaitTime, averageTurnaroundTime;
