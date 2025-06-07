@@ -22,9 +22,9 @@ namespace CpuSchedulingWinForms
         private void DashBoardButton_Click(object sender, EventArgs e)
         {
             //dashBoardTab.Show();
-            this.tabSelection.SelectTab(0);
-            this.sidePanel.Height = btnDashBoard.Height;
-            this.sidePanel.Top = btnDashBoard.Top;
+            tabSelection.SelectTab(0);
+            sidePanel.Height = btnDashBoard.Height;
+            sidePanel.Top = btnDashBoard.Top;
 
         }
 
@@ -33,10 +33,10 @@ namespace CpuSchedulingWinForms
         /// </summary>
         private void CpuSchedulerButton_Click(object sender, EventArgs e)
         {
-            //this.dashBoardTab.Show();
-            this.tabSelection.SelectTab(1);
-            this.sidePanel.Height = btnCpuScheduler.Height;
-            this.sidePanel.Top = btnCpuScheduler.Top;
+            //dashBoardTab.Show();
+            tabSelection.SelectTab(1);
+            sidePanel.Height = btnCpuScheduler.Height;
+            sidePanel.Top = btnCpuScheduler.Top;
 
         }
 
@@ -51,17 +51,17 @@ namespace CpuSchedulingWinForms
                 Algorithms.RunFirstComeFirstServe(txtProcess.Text);
                 if (processCount <= 10)
                 {
-                    this.progressBar1.Increment(4); //cpu progress bar
-                    this.progressBar1.SetState(1);
-                    this.progressBar2.Increment(13);
-                    this.progressBar2.SetState(1);
+                    progressBar1.Increment(4); //cpu progress bar
+                    progressBar1.SetState(1);
+                    progressBar2.Increment(13);
+                    progressBar2.SetState(1);
                 }
                 else if (processCount > 10)
                 {
-                    this.progressBar1.Increment(15);
-                    this.progressBar1.SetState(1);
-                    this.progressBar2.Increment(38); //memory progress bar
-                    this.progressBar2.SetState(3);
+                    progressBar1.Increment(15);
+                    progressBar1.SetState(1);
+                    progressBar2.Increment(38); //memory progress bar
+                    progressBar2.SetState(3);
                 }
 
                 listView1.Clear();
@@ -100,17 +100,17 @@ namespace CpuSchedulingWinForms
                 Algorithms.RunShortestJobFirst(txtProcess.Text);
                 if (processCount <= 10)
                 {
-                    this.progressBar1.Increment(4); //cpu progress bar
-                    this.progressBar1.SetState(1);
-                    this.progressBar2.Increment(13);
-                    this.progressBar2.SetState(1);
+                    progressBar1.Increment(4); //cpu progress bar
+                    progressBar1.SetState(1);
+                    progressBar2.Increment(13);
+                    progressBar2.SetState(1);
                 }
                 else if (processCount > 10)
                 {
-                    this.progressBar1.Increment(15);
-                    this.progressBar1.SetState(1);
-                    this.progressBar2.Increment(38); //memory progress bar
-                    this.progressBar2.SetState(3);
+                    progressBar1.Increment(15);
+                    progressBar1.SetState(1);
+                    progressBar2.Increment(38); //memory progress bar
+                    progressBar2.SetState(3);
                 }
 
                 listView1.Clear();
@@ -147,17 +147,17 @@ namespace CpuSchedulingWinForms
                 Algorithms.RunPriorityScheduling(txtProcess.Text);
                 if (processCount <= 10)
                 {
-                    this.progressBar1.Increment(4); //cpu progress bar
-                    this.progressBar1.SetState(1);  //cpu color progress bar
-                    this.progressBar2.Increment(13);
-                    this.progressBar2.SetState(1);
+                    progressBar1.Increment(4); //cpu progress bar
+                    progressBar1.SetState(1);  //cpu color progress bar
+                    progressBar2.Increment(13);
+                    progressBar2.SetState(1);
                 }
                 else if (processCount > 10)
                 {
-                    this.progressBar1.Increment(15);
-                    this.progressBar1.SetState(1);
-                    this.progressBar2.Increment(38); //memory progress bar
-                    this.progressBar2.SetState(3);   //memory color progress bar
+                    progressBar1.Increment(15);
+                    progressBar1.SetState(1);
+                    progressBar2.Increment(38); //memory progress bar
+                    progressBar2.SetState(3);   //memory color progress bar
                 }
                 listView1.Clear();
                 listView1.View = View.Details;
@@ -196,7 +196,7 @@ namespace CpuSchedulingWinForms
         /// </summary>
         private void RestartApp_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            Hide();
             CpuSchedulerForm cpuScheduler = new CpuSchedulerForm();
             cpuScheduler.ShowDialog();
         }
@@ -208,10 +208,10 @@ namespace CpuSchedulingWinForms
         /// </summary>
         private void CpuSchedulerForm_Load(object sender, EventArgs e)
         {
-            this.sidePanel.Height = btnDashBoard.Height;
-            this.sidePanel.Top = btnDashBoard.Top;
-            this.progressBar1.Increment(5);
-            this.progressBar2.Increment(17);
+            sidePanel.Height = btnDashBoard.Height;
+            sidePanel.Top = btnDashBoard.Top;
+            progressBar1.Increment(5);
+            progressBar2.Increment(17);
             listView1.View = View.Details;
             listView1.GridLines = true;
         }
@@ -243,17 +243,17 @@ namespace CpuSchedulingWinForms
                 Algorithms.RunRoundRobin(txtProcess.Text);
                 if (processCount <= 10)
                 {
-                    this.progressBar1.Increment(4); //cpu progress bar
-                    this.progressBar1.SetState(1);  //cpu color progress bar
-                    this.progressBar2.Increment(13);
-                    this.progressBar2.SetState(1);
+                    progressBar1.Increment(4); //cpu progress bar
+                    progressBar1.SetState(1);  //cpu color progress bar
+                    progressBar2.Increment(13);
+                    progressBar2.SetState(1);
                 }
                 else if (processCount > 10)
                 {
-                    this.progressBar1.Increment(15);
-                    this.progressBar1.SetState(1);
-                    this.progressBar2.Increment(38); //memory progress bar
-                    this.progressBar2.SetState(3);   //memory color progress bar
+                    progressBar1.Increment(15);
+                    progressBar1.SetState(1);
+                    progressBar2.Increment(38); //memory progress bar
+                    progressBar2.SetState(3);   //memory color progress bar
                 }
                 string quantumTime = Helper.QuantumTime;
                 listView1.Clear();
@@ -285,9 +285,9 @@ namespace CpuSchedulingWinForms
         /// </summary>
         private void FadeOutTimer_Tick(object sender, EventArgs e)
         {
-            if (this.Opacity > 0.0)
+            if (Opacity > 0.0)
             {
-                this.Opacity -= 0.021;
+                Opacity -= 0.021;
             }
             else
             {
