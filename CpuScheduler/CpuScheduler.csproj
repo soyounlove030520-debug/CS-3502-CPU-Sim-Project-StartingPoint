@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6954F540-2148-4D2F-879A-BE82576B1083}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>CpuSchedulingWinForms</RootNamespace>
-    <AssemblyName>CpuSchedulingWinForms</AssemblyName>
+    <RootNamespace>CpuScheduler</RootNamespace>
+    <AssemblyName>CpuScheduler</AssemblyName>
     <TargetFrameworkVersion>v9.0.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
