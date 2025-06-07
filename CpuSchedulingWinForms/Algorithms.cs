@@ -11,7 +11,11 @@ namespace CpuSchedulingWinForms
         /// <param name="processCountInput">The number of processes to schedule.</param>
         public static void RunFirstComeFirstServe(string processCountInput)
         {
-            int processCount = Convert.ToInt16(processCountInput);
+            if (!int.TryParse(processCountInput, out int processCount) || processCount <= 0)
+            {
+                MessageBox.Show("Invalid number of processes", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             double[] burstTimes = new double[processCount];
             double[] waitingTimes = new double[processCount];
@@ -36,7 +40,11 @@ namespace CpuSchedulingWinForms
                         -1,
                         -1);
 
-                    burstTimes[i] = Convert.ToInt64(input);
+                    if (!double.TryParse(input, out burstTimes[i]) || burstTimes[i] < 0)
+                    {
+                        MessageBox.Show("Invalid burst time", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
                 }
 
@@ -75,7 +83,11 @@ namespace CpuSchedulingWinForms
         /// <param name="processCountInput">The number of processes to schedule.</param>
         public static void RunShortestJobFirst(string processCountInput)
         {
-            int processCount = Convert.ToInt16(processCountInput);
+            if (!int.TryParse(processCountInput, out int processCount) || processCount <= 0)
+            {
+                MessageBox.Show("Invalid number of processes", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             double[] burstTimes = new double[processCount];
             double[] waitingTimes = new double[processCount];
@@ -102,7 +114,11 @@ namespace CpuSchedulingWinForms
                                                            "",
                                                            -1, -1);
 
-                    burstTimes[i] = Convert.ToInt64(input);
+                    if (!double.TryParse(input, out burstTimes[i]) || burstTimes[i] < 0)
+                    {
+                        MessageBox.Show("Invalid burst time", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
                 for (i = 0; i < processCount; i++)
                 {
@@ -178,7 +194,11 @@ namespace CpuSchedulingWinForms
         /// <param name="processCountInput">The number of processes to schedule.</param>
         public static void RunPriorityScheduling(string processCountInput)
         {
-            int processCount = Convert.ToInt16(processCountInput);
+            if (!int.TryParse(processCountInput, out int processCount) || processCount <= 0)
+            {
+                MessageBox.Show("Invalid number of processes", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             DialogResult result = MessageBox.Show(
                 "Priority Scheduling",
@@ -204,7 +224,11 @@ namespace CpuSchedulingWinForms
                                                            "Burst time for P" + (i + 1),
                                                            "",
                                                            -1, -1);
-                    burstTimes[i] = Convert.ToInt64(input);
+                    if (!double.TryParse(input, out burstTimes[i]) || burstTimes[i] < 0)
+                    {
+                        MessageBox.Show("Invalid burst time", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
                 for (i = 0; i < processCount; i++)
                 {
@@ -213,7 +237,11 @@ namespace CpuSchedulingWinForms
                                                            "Priority for P" + (i + 1),
                                                            "",
                                                            -1, -1);
-                    priorities[i] = Convert.ToInt16(input2);
+                    if (!int.TryParse(input2, out priorities[i]) || priorities[i] < 0)
+                    {
+                        MessageBox.Show("Invalid priority", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
                 for (i = 0; i < processCount; i++)
                 {
@@ -289,15 +317,19 @@ namespace CpuSchedulingWinForms
         /// <param name="processCountInput">The number of processes to schedule.</param>
         public static void RunRoundRobin(string processCountInput)
         {
-            int processCount = Convert.ToInt16(processCountInput);
+            if (!int.TryParse(processCountInput, out int processCount) || processCount <= 0)
+            {
+                MessageBox.Show("Invalid number of processes", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             int index, counter = 0;
             double total;
             double timeQuantum;
             double waitTime = 0, turnaroundTime = 0;
             double averageWaitTime, averageTurnaroundTime;
-            double[] arrivalTimes = new double[10];
-            double[] burstTimes = new double[10];
-            double[] remainingTimes = new double[10];
+            double[] arrivalTimes = new double[processCount];
+            double[] burstTimes = new double[processCount];
+            double[] remainingTimes = new double[processCount];
             int remainingProcesses = processCount;
 
             DialogResult result = MessageBox.Show(
@@ -315,14 +347,22 @@ namespace CpuSchedulingWinForms
                                                                "Arrival time for P" + (index + 1),
                                                                "",
                                                                -1, -1);
-                    arrivalTimes[index] = Convert.ToInt64(arrivalInput);
+                    if (!double.TryParse(arrivalInput, out arrivalTimes[index]) || arrivalTimes[index] < 0)
+                    {
+                        MessageBox.Show("Invalid arrival time", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
                     string burstInput =
                             Microsoft.VisualBasic.Interaction.InputBox("Enter burst time: ",
                                                                "Burst time for P" + (index + 1),
                                                                "",
                                                                -1, -1);
-                    burstTimes[index] = Convert.ToInt64(burstInput);
+                    if (!double.TryParse(burstInput, out burstTimes[index]) || burstTimes[index] < 0)
+                    {
+                        MessageBox.Show("Invalid burst time", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
                     remainingTimes[index] = burstTimes[index];
                 }
@@ -331,7 +371,11 @@ namespace CpuSchedulingWinForms
                                                                "",
                                                                -1, -1);
 
-                timeQuantum = Convert.ToInt64(timeQuantumInput);
+                if (!double.TryParse(timeQuantumInput, out timeQuantum) || timeQuantum <= 0)
+                {
+                    MessageBox.Show("Invalid quantum time", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 Helper.QuantumTime = timeQuantumInput;
 
                 for (total = 0, index = 0; remainingProcesses != 0;)
