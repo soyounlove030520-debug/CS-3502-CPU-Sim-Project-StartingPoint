@@ -46,10 +46,9 @@ namespace CpuSchedulingWinForms
         /// </summary>
         private void FirstComeFirstServeButton_Click(object sender, EventArgs e)
         {
-            if (txtProcess.Text != "")
+            if (int.TryParse(txtProcess.Text, out int processCount) && processCount > 0)
             {
                 Algorithms.RunFirstComeFirstServe(txtProcess.Text);
-                int processCount = Int16.Parse(txtProcess.Text);
                 if (processCount <= 10)
                 {
                     this.progressBar1.Increment(4); //cpu progress bar
@@ -86,7 +85,7 @@ namespace CpuSchedulingWinForms
             }
             else
             {
-                MessageBox.Show("Enter number of processes", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Enter a valid number of processes", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtProcess.Focus();
             }
         }
@@ -96,10 +95,9 @@ namespace CpuSchedulingWinForms
         /// </summary>
         private void ShortestJobFirstButton_Click(object sender, EventArgs e)
         {
-            if (txtProcess.Text != "")
+            if (int.TryParse(txtProcess.Text, out int processCount) && processCount > 0)
             {
                 Algorithms.RunShortestJobFirst(txtProcess.Text);
-                int processCount = Int16.Parse(txtProcess.Text);
                 if (processCount <= 10)
                 {
                     this.progressBar1.Increment(4); //cpu progress bar
@@ -134,7 +132,7 @@ namespace CpuSchedulingWinForms
             }
             else
             {
-                MessageBox.Show("Enter number of processes", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Enter a valid number of processes", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtProcess.Focus();
             }
         }
@@ -144,10 +142,9 @@ namespace CpuSchedulingWinForms
         /// </summary>
         private void PriorityButton_Click(object sender, EventArgs e)
         {
-            if (txtProcess.Text != "")
+            if (int.TryParse(txtProcess.Text, out int processCount) && processCount > 0)
             {
                 Algorithms.RunPriorityScheduling(txtProcess.Text);
-                int processCount = Int16.Parse(txtProcess.Text);
                 if (processCount <= 10)
                 {
                     this.progressBar1.Increment(4); //cpu progress bar
@@ -181,7 +178,7 @@ namespace CpuSchedulingWinForms
             }
             else
             {
-                MessageBox.Show("Enter number of processes", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Enter a valid number of processes", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtProcess.Focus();
             }
         }
@@ -241,10 +238,9 @@ namespace CpuSchedulingWinForms
         /// </summary>
         private void RoundRobinButton_Click(object sender, EventArgs e)
         {
-            if (txtProcess.Text != "")
+            if (int.TryParse(txtProcess.Text, out int processCount) && processCount > 0)
             {
                 Algorithms.RunRoundRobin(txtProcess.Text);
-                int processCount = Int16.Parse(txtProcess.Text);
                 if (processCount <= 10)
                 {
                     this.progressBar1.Increment(4); //cpu progress bar
@@ -279,7 +275,7 @@ namespace CpuSchedulingWinForms
             }
             else
             {
-                MessageBox.Show("Enter number of processes", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Enter a valid number of processes", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtProcess.Focus();
             }
         }
