@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2022
 VisualStudioVersion = 17.14.4
 MinimumVisualStudioVersion = 17.0.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CpuSchedulingWinForms", "CpuSchedulingWinForms\CpuSchedulingWinForms.csproj", "{6954F540-2148-4D2F-879A-BE82576B1083}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CpuScheduler", "CpuScheduler\CpuScheduler.csproj", "{6954F540-2148-4D2F-879A-BE82576B1083}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

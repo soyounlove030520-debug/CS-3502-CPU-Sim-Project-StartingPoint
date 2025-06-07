@@ -1,4 +1,4 @@
-﻿namespace CpuSchedulingWinForms
+﻿namespace CpuScheduler
 {
     public static class Helper
     {

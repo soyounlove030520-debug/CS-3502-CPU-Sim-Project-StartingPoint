@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace CpuSchedulingWinForms
+namespace CpuScheduler
 {
     /// <summary>
     /// Main form for demonstrating CPU scheduling algorithms.

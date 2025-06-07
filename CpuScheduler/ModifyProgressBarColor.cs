@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace CpuSchedulingWinForms
+namespace CpuScheduler
 {
     public static class ModifyProgressBarColor
     {
