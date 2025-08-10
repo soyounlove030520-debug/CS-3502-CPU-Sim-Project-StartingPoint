@@ -29,16 +29,16 @@ Additional algorithms can easily be added by extending `Algorithms.cs`.
    git clone git@github.com:iAmGiG/CS-3502-CPU-Sim-Project-StartingPoint.git
    ```
 
-2. Open `CpuSchedulingWinForms.sln` in Visual Studio and build the solution. Alternatively, use the .NET CLI:
+2. Open `CpuScheduler.sln` in Visual Studio and build the solution. Alternatively, use the .NET CLI:
 
    ```bash
-   dotnet build CpuSchedulingWinForms.sln
+   dotnet build CpuScheduler.sln
    ```
 
 3. Run the application:
 
    ```bash
-   dotnet run --project CpuSchedulingWinForms/CpuSchedulingWinForms.csproj
+   dotnet run --project CpuScheduler/CpuScheduler.csproj
    ```
 
 4. Enter the desired number of processes and choose a scheduling algorithm from the interface. The app will prompt for additional values as needed (burst time, priority, quantum time, etc.) and display the results.
