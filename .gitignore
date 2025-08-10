@@ -58,3 +58,6 @@ FakesAssemblies/
 project.lock.json
 project.fragment.lock.json
 artifacts/
+
+# Misc files
+CS_3502_OS_P2_CPU_Scheduler.pdf

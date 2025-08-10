@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace CpuScheduler
@@ -8,12 +13,22 @@ namespace CpuScheduler
     /// </summary>
     public partial class CpuSchedulerForm : Form
     {
+        private DataTable processTable;
+        private Random random = new Random();
+        private bool isDarkMode = true; // Default to dark mode
+        
+        // STUDENTS: Configure these limits based on your algorithm performance requirements
+        private const int MIN_PROCESS_COUNT = 1;
+        private const int MAX_PROCESS_COUNT = 100;
+        private const int DEFAULT_PROCESS_COUNT = 3;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CpuSchedulerForm"/> class.
         /// </summary>
         public CpuSchedulerForm()
         {
             InitializeComponent();
+            InitializeProcessTable();
         }
 
         /// <summary>
@@ -54,6 +69,15 @@ namespace CpuScheduler
             ShowPanel(aboutPanel);
             sidePanel.Height = btnAbout.Height;
             sidePanel.Top = btnAbout.Top;
+        }
+
+        /// <summary>
+        /// Toggles between dark and light mode themes.
+        /// </summary>
+        private void DarkModeToggle_Click(object sender, EventArgs e)
+        {
+            isDarkMode = !isDarkMode;
+            ApplyTheme();
         }
 
         /// <summary>
@@ -169,39 +193,469 @@ Instructions:
 4. Compare algorithm behaviors and outcomes";
         }
 
+        /// <summary>
+        /// STUDENTS: Helper method to get process data from the DataGrid
+        /// Use this in your custom algorithm implementations instead of prompting users
+        /// Returns: List of process data (ID, Burst Time, Priority, Arrival Time)
+        /// </summary>
+        public List<ProcessData> GetProcessDataFromGrid()
+        {
+            var processList = new List<ProcessData>();
+            foreach (DataRow row in processTable.Rows)
+            {
+                processList.Add(new ProcessData
+                {
+                    ProcessID = row["Process ID"].ToString(),
+                    BurstTime = Convert.ToInt32(row["Burst Time"]),
+                    Priority = Convert.ToInt32(row["Priority"]),
+                    ArrivalTime = Convert.ToInt32(row["Arrival Time"])
+                });
+            }
+            return processList;
+        }
 
         /// <summary>
-        /// Executes the First-Come, First-Served algorithm.
+        /// STUDENTS: Data structure for process information
+        /// Use this when implementing your custom scheduling algorithms
+        /// </summary>
+        public class ProcessData
+        {
+            public string ProcessID { get; set; }
+            public int BurstTime { get; set; }
+            public int Priority { get; set; }
+            public int ArrivalTime { get; set; }
+        }
+
+        /// <summary>
+        /// STUDENTS: Validates process count input with configurable limits
+        /// Returns true if valid, false otherwise
+        /// </summary>
+        private bool IsValidProcessCount(string input, out int processCount)
+        {
+            if (int.TryParse(input, out processCount))
+            {
+                return processCount >= MIN_PROCESS_COUNT && processCount <= MAX_PROCESS_COUNT;
+            }
+            processCount = 0;
+            return false;
+        }
+
+        /// <summary>
+        /// STUDENTS: Example FCFS algorithm implementation using DataGrid data
+        /// This replaces the old prompt-based system with direct data access
+        /// </summary>
+        private List<SchedulingResult> RunFCFSAlgorithm(List<ProcessData> processes)
+        {
+            var results = new List<SchedulingResult>();
+            var currentTime = 0;
+            
+            // Sort by arrival time for FCFS
+            var sortedProcesses = processes.OrderBy(p => p.ArrivalTime).ToList();
+            
+            foreach (var process in sortedProcesses)
+            {
+                var startTime = Math.Max(currentTime, process.ArrivalTime);
+                var finishTime = startTime + process.BurstTime;
+                var waitingTime = startTime - process.ArrivalTime;
+                var turnaroundTime = finishTime - process.ArrivalTime;
+                
+                results.Add(new SchedulingResult
+                {
+                    ProcessID = process.ProcessID,
+                    ArrivalTime = process.ArrivalTime,
+                    BurstTime = process.BurstTime,
+                    StartTime = startTime,
+                    FinishTime = finishTime,
+                    WaitingTime = waitingTime,
+                    TurnaroundTime = turnaroundTime
+                });
+                
+                currentTime = finishTime;
+            }
+            
+            return results;
+        }
+
+        /// <summary>
+        /// STUDENTS: Data structure for algorithm results
+        /// Use this to store and display scheduling algorithm outcomes
+        /// </summary>
+        public class SchedulingResult
+        {
+            public string ProcessID { get; set; }
+            public int ArrivalTime { get; set; }
+            public int BurstTime { get; set; }
+            public int StartTime { get; set; }
+            public int FinishTime { get; set; }
+            public int WaitingTime { get; set; }
+            public int TurnaroundTime { get; set; }
+        }
+
+        /// <summary>
+        /// STUDENTS: Displays scheduling results in a formatted table
+        /// Use this method to show your algorithm results consistently
+        /// </summary>
+        private void DisplaySchedulingResults(List<SchedulingResult> results, string algorithmName)
+        {
+            listView1.Clear();
+            listView1.View = View.Details;
+
+            // Set up columns for detailed results
+            listView1.Columns.Add("Process ID", 100, HorizontalAlignment.Center);
+            listView1.Columns.Add("Arrival", 80, HorizontalAlignment.Center);
+            listView1.Columns.Add("Burst", 80, HorizontalAlignment.Center);
+            listView1.Columns.Add("Start", 80, HorizontalAlignment.Center);
+            listView1.Columns.Add("Finish", 80, HorizontalAlignment.Center);
+            listView1.Columns.Add("Waiting", 80, HorizontalAlignment.Center);
+            listView1.Columns.Add("Turnaround", 90, HorizontalAlignment.Center);
+
+            // Add process results
+            foreach (var result in results)
+            {
+                var item = new ListViewItem(result.ProcessID);
+                item.SubItems.Add(result.ArrivalTime.ToString());
+                item.SubItems.Add(result.BurstTime.ToString());
+                item.SubItems.Add(result.StartTime.ToString());
+                item.SubItems.Add(result.FinishTime.ToString());
+                item.SubItems.Add(result.WaitingTime.ToString());
+                item.SubItems.Add(result.TurnaroundTime.ToString());
+                listView1.Items.Add(item);
+            }
+            
+            // Add summary statistics
+            var avgWaiting = results.Average(r => r.WaitingTime);
+            var avgTurnaround = results.Average(r => r.TurnaroundTime);
+            
+            var summaryItem = new ListViewItem("SUMMARY");
+            summaryItem.SubItems.Add(algorithmName);
+            summaryItem.SubItems.Add($"{results.Count} processes");
+            summaryItem.SubItems.Add($"Avg Wait: {avgWaiting:F1}");
+            summaryItem.SubItems.Add($"Avg Turn: {avgTurnaround:F1}");
+            summaryItem.SubItems.Add("");
+            summaryItem.SubItems.Add("");
+            listView1.Items.Add(summaryItem);
+        }
+
+        /// <summary>
+        /// Initializes the process data table structure.
+        /// </summary>
+        private void InitializeProcessTable()
+        {
+            processTable = new DataTable();
+            processTable.Columns.Add("Process ID", typeof(string));
+            processTable.Columns.Add("Burst Time", typeof(int));
+            processTable.Columns.Add("Priority", typeof(int));
+            processTable.Columns.Add("Arrival Time", typeof(int));
+
+            processDataGrid.DataSource = processTable;
+            processDataGrid.AllowUserToAddRows = false;
+            processDataGrid.AllowUserToDeleteRows = false;
+            
+            // Set column widths and configure for larger datasets
+            if (processDataGrid.Columns.Count > 0)
+            {
+                processDataGrid.Columns[0].Width = 100; // Process ID
+                processDataGrid.Columns[1].Width = 100; // Burst Time
+                processDataGrid.Columns[2].Width = 100; // Priority  
+                processDataGrid.Columns[3].Width = 100; // Arrival Time
+                
+                // STUDENTS: Performance optimizations for larger datasets
+                processDataGrid.VirtualMode = false; // Set to true if using 500+ processes
+                processDataGrid.RowHeadersVisible = false; // Save space
+                processDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None; // Faster rendering
+            }
+        }
+
+        /// <summary>
+        /// Handles the Set Process Count button click.
+        /// </summary>
+        private void SetProcessCount_Click(object sender, EventArgs e)
+        {
+            // STUDENTS: Process count validation using helper method
+            // Adjust MIN/MAX_PROCESS_COUNT constants above for your requirements
+            if (IsValidProcessCount(txtProcess.Text, out int processCount))
+            {
+                // STUDENTS: Performance warning for large datasets
+                if (processCount > 50)
+                {
+                    var result = MessageBox.Show(
+                        $"You are creating {processCount} processes. This may impact performance.\n\nContinue?",
+                        "Large Dataset Warning",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+                    
+                    if (result == DialogResult.No)
+                    {
+                        txtProcess.Focus();
+                        return;
+                    }
+                }
+                
+                processTable.Clear();
+                
+                for (int i = 0; i < processCount; i++)
+                {
+                    DataRow row = processTable.NewRow();
+                    row["Process ID"] = $"P{i + 1}";
+                    row["Burst Time"] = random.Next(1, 11); // Default 1-10
+                    row["Priority"] = i + 1; // Default priority
+                    row["Arrival Time"] = 0; // Default arrival time
+                    processTable.Rows.Add(row);
+                }
+
+                // Reset combo box selection
+                cmbLoadExample.SelectedIndex = 0;
+            }
+            else
+            {
+                MessageBox.Show($"Please enter a valid number of processes ({MIN_PROCESS_COUNT}-{MAX_PROCESS_COUNT})", 
+                    "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtProcess.Focus();
+            }
+        }
+
+        /// <summary>
+        /// Generates random data for the process table.
+        /// </summary>
+        private void GenerateRandom_Click(object sender, EventArgs e)
+        {
+            foreach (DataRow row in processTable.Rows)
+            {
+                row["Burst Time"] = random.Next(1, 21);
+                row["Priority"] = random.Next(1, processTable.Rows.Count + 1);
+                row["Arrival Time"] = random.Next(0, 10);
+            }
+        }
+
+        /// <summary>
+        /// Clears all process data and resets to default state.
+        /// </summary>
+        private void ClearAll_Click(object sender, EventArgs e)
+        {
+            processTable.Clear();
+            txtProcess.Text = DEFAULT_PROCESS_COUNT.ToString();
+            cmbLoadExample.SelectedIndex = 0;
+            txtProcess.Focus();
+        }
+
+        /// <summary>
+        /// Loads example process scenarios.
+        /// </summary>
+        private void LoadExample_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbLoadExample.SelectedIndex <= 0 || processTable.Rows.Count == 0)
+                return;
+
+            switch (cmbLoadExample.SelectedIndex)
+            {
+                case 1: // Short Processes
+                    foreach (DataRow row in processTable.Rows)
+                    {
+                        row["Burst Time"] = random.Next(1, 6);
+                        row["Priority"] = random.Next(1, 5);
+                        row["Arrival Time"] = 0;
+                    }
+                    break;
+                    
+                case 2: // Mixed Load
+                    foreach (DataRow row in processTable.Rows)
+                    {
+                        row["Burst Time"] = random.Next(1, 21);
+                        row["Priority"] = random.Next(1, 10);
+                        row["Arrival Time"] = random.Next(0, 5);
+                    }
+                    break;
+                    
+                case 3: // Heavy Load
+                    foreach (DataRow row in processTable.Rows)
+                    {
+                        row["Burst Time"] = random.Next(10, 31);
+                        row["Priority"] = random.Next(1, 5);
+                        row["Arrival Time"] = random.Next(0, 10);
+                    }
+                    break;
+                    
+                case 4: // Priority Demo
+                    int priority = processTable.Rows.Count;
+                    foreach (DataRow row in processTable.Rows)
+                    {
+                        row["Burst Time"] = random.Next(5, 15);
+                        row["Priority"] = priority--;
+                        row["Arrival Time"] = 0;
+                    }
+                    break;
+            }
+            
+            cmbLoadExample.SelectedIndex = 0; // Reset dropdown
+        }
+
+        /// <summary>
+        /// STUDENTS: Saves DataGrid data to CSV file for external editing or backup
+        /// This allows you to prepare process data in Excel/CSV editors
+        /// </summary>
+        private void SaveData_Click(object sender, EventArgs e)
+        {
+            if (processTable.Rows.Count == 0)
+            {
+                MessageBox.Show("No process data to save. Please set process count first.", 
+                    "No Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            using (var saveDialog = new SaveFileDialog())
+            {
+                saveDialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
+                saveDialog.DefaultExt = "csv";
+                saveDialog.FileName = "ProcessData.csv";
+                saveDialog.Title = "Save Process Data";
+
+                if (saveDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        using (var writer = new System.IO.StreamWriter(saveDialog.FileName))
+                        {
+                            // Write header
+                            writer.WriteLine("Process ID,Burst Time,Priority,Arrival Time");
+                            
+                            // Write data rows
+                            foreach (DataRow row in processTable.Rows)
+                            {
+                                writer.WriteLine($"{row["Process ID"]},{row["Burst Time"]},{row["Priority"]},{row["Arrival Time"]}");
+                            }
+                        }
+                        
+                        MessageBox.Show($"Process data saved successfully to:\n{saveDialog.FileName}", 
+                            "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error saving file: {ex.Message}", 
+                            "Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// STUDENTS: Loads process data from CSV file for testing custom datasets
+        /// This allows you to prepare complex test scenarios in Excel/CSV editors
+        /// </summary>
+        private void LoadData_Click(object sender, EventArgs e)
+        {
+            using (var openDialog = new OpenFileDialog())
+            {
+                openDialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
+                openDialog.DefaultExt = "csv";
+                openDialog.Title = "Load Process Data from CSV";
+
+                if (openDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        var loadedData = new List<ProcessData>();
+                        using (var reader = new System.IO.StreamReader(openDialog.FileName))
+                        {
+                            // Skip header line
+                            var headerLine = reader.ReadLine();
+                            if (headerLine == null)
+                            {
+                                MessageBox.Show("The CSV file is empty.", "Load Error", 
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+
+                            string line;
+                            int lineNumber = 1;
+                            while ((line = reader.ReadLine()) != null)
+                            {
+                                lineNumber++;
+                                var parts = line.Split(',');
+                                
+                                if (parts.Length != 4)
+                                {
+                                    MessageBox.Show($"Invalid format on line {lineNumber}. Expected format: ProcessID,BurstTime,Priority,ArrivalTime", 
+                                        "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    return;
+                                }
+
+                                try
+                                {
+                                    loadedData.Add(new ProcessData
+                                    {
+                                        ProcessID = parts[0].Trim(),
+                                        BurstTime = int.Parse(parts[1].Trim()),
+                                        Priority = int.Parse(parts[2].Trim()),
+                                        ArrivalTime = int.Parse(parts[3].Trim())
+                                    });
+                                }
+                                catch (FormatException)
+                                {
+                                    MessageBox.Show($"Invalid number format on line {lineNumber}.", 
+                                        "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    return;
+                                }
+                            }
+                        }
+
+                        if (loadedData.Count == 0)
+                        {
+                            MessageBox.Show("No process data found in the CSV file.", "Load Error", 
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+
+                        if (loadedData.Count > MAX_PROCESS_COUNT)
+                        {
+                            MessageBox.Show($"CSV contains {loadedData.Count} processes, but maximum allowed is {MAX_PROCESS_COUNT}. Loading first {MAX_PROCESS_COUNT} processes.", 
+                                "Process Count Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            loadedData = loadedData.Take(MAX_PROCESS_COUNT).ToList();
+                        }
+
+                        // Clear existing data and load from CSV
+                        processTable.Clear();
+                        foreach (var process in loadedData)
+                        {
+                            DataRow row = processTable.NewRow();
+                            row["Process ID"] = process.ProcessID;
+                            row["Burst Time"] = process.BurstTime;
+                            row["Priority"] = process.Priority;
+                            row["Arrival Time"] = process.ArrivalTime;
+                            processTable.Rows.Add(row);
+                        }
+
+                        // Update UI to reflect loaded data
+                        txtProcess.Text = loadedData.Count.ToString();
+                        cmbLoadExample.SelectedIndex = 0;
+
+                        MessageBox.Show($"Successfully loaded {loadedData.Count} processes from:\n{openDialog.FileName}", 
+                            "Load Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error loading file: {ex.Message}", 
+                            "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Executes the First-Come, First-Served algorithm using DataGrid data.
+        /// STUDENTS: This demonstrates how to use GetProcessDataFromGrid() instead of prompts
+        /// Use this pattern for your custom algorithm implementations
         /// </summary>
         private void FirstComeFirstServeButton_Click(object sender, EventArgs e)
         {
-            if (int.TryParse(txtProcess.Text, out int processCount) && processCount > 0)
+            var processData = GetProcessDataFromGrid();
+            if (processData.Count > 0)
             {
-                Algorithms.RunFirstComeFirstServe(txtProcess.Text);
+                // STUDENTS: Example implementation using DataGrid data
+                var results = RunFCFSAlgorithm(processData);
 
-                // Update Results tab
-                listView1.Clear();
-                listView1.View = View.Details;
-
-                listView1.Columns.Add("Process ID", 150, HorizontalAlignment.Center);
-                listView1.Columns.Add("Algorithm", 120, HorizontalAlignment.Center);
-                listView1.Columns.Add("Status", 100, HorizontalAlignment.Center);
-
-                for (int i = 0; i < processCount; i++)
-                {
-                    var item = new ListViewItem();
-                    item.Text = "Process " + (i + 1);
-                    item.SubItems.Add("FCFS");
-                    item.SubItems.Add("Completed");
-                    listView1.Items.Add(item);
-                }
-                
-                // Add summary
-                var summaryItem = new ListViewItem();
-                summaryItem.Text = "Summary";
-                summaryItem.SubItems.Add("First Come First Serve");
-                summaryItem.SubItems.Add(processCount + " processes executed");
-                listView1.Items.Add(summaryItem);
+                // Update Results tab with detailed scheduling results
+                DisplaySchedulingResults(results, "FCFS - First Come First Serve");
                 
                 // Switch to Results panel and update sidebar
                 ShowPanel(resultsPanel);
@@ -210,18 +664,22 @@ Instructions:
             }
             else
             {
-                MessageBox.Show("Enter a valid number of processes", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please set process count and ensure the data grid has process data.", 
+                    "No Process Data", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtProcess.Focus();
             }
         }
 
         /// <summary>
         /// Executes the Shortest Job First algorithm.
+        /// STUDENTS: This still uses the old prompt system - update to use DataGrid like FCFS
+        /// Example: var processData = GetProcessDataFromGrid(); var results = RunSJFAlgorithm(processData);
         /// </summary>
         private void ShortestJobFirstButton_Click(object sender, EventArgs e)
         {
             if (int.TryParse(txtProcess.Text, out int processCount) && processCount > 0)
             {
+                // TODO: Replace with DataGrid implementation like FCFS
                 Algorithms.RunShortestJobFirst(txtProcess.Text);
 
                 // Update Results tab
@@ -262,11 +720,14 @@ Instructions:
 
         /// <summary>
         /// Executes the Priority algorithm.
+        /// STUDENTS: This still uses the old prompt system - update to use DataGrid like FCFS
+        /// Example: var processData = GetProcessDataFromGrid(); var results = RunPriorityAlgorithm(processData);
         /// </summary>
         private void PriorityButton_Click(object sender, EventArgs e)
         {
             if (int.TryParse(txtProcess.Text, out int processCount) && processCount > 0)
             {
+                // TODO: Replace with DataGrid implementation like FCFS
                 Algorithms.RunPriorityScheduling(txtProcess.Text);
 
                 // Update Results tab
@@ -326,6 +787,26 @@ Instructions:
 
 
         /// <summary>
+        /// STUDENTS: Applies rounded corners to a button for modern UI appearance
+        /// Call this method for any custom buttons you add to maintain consistency
+        /// </summary>
+        private void ApplyRoundedCorners(Button button, int radius = 15)
+        {
+            GraphicsPath path = new GraphicsPath();
+            Rectangle rect = new Rectangle(0, 0, button.Width - 1, button.Height - 1);
+            
+            path.AddArc(rect.X, rect.Y, radius, radius, 180, 90);
+            path.AddArc(rect.X + rect.Width - radius, rect.Y, radius, radius, 270, 90);
+            path.AddArc(rect.X + rect.Width - radius, rect.Y + rect.Height - radius, radius, radius, 0, 90);
+            path.AddArc(rect.X, rect.Y + rect.Height - radius, radius, radius, 90, 90);
+            path.CloseAllFigures();
+            
+            button.Region = new Region(path);
+            button.FlatStyle = FlatStyle.Flat;
+            button.FlatAppearance.BorderSize = 0;
+        }
+
+        /// <summary>
         /// Handles form load logic.
         /// </summary>
         private void CpuSchedulerForm_Load(object sender, EventArgs e)
@@ -347,19 +828,274 @@ Instructions:
             InitializeWelcomeContent();
             InitializeAboutContent();
             
+            // Load default process data for immediate use
+            LoadDefaultProcessData();
+            
+            // Apply rounded corners to all buttons for modern UI
+            ApplyRoundedCorners(btnSetProcessCount);
+            ApplyRoundedCorners(btnGenerateRandom);
+            ApplyRoundedCorners(btnClearAll);
+            ApplyRoundedCorners(btnSaveData);
+            ApplyRoundedCorners(btnLoadData);
+            ApplyRoundedCorners(btnFCFS);
+            ApplyRoundedCorners(btnSJF);
+            ApplyRoundedCorners(btnPriority);
+            ApplyRoundedCorners(btnRoundRobin);
+            ApplyRoundedCorners(btnDarkModeToggle);
+            
+            // Apply default dark theme
+            ApplyTheme();
+            
             // Show Welcome panel by default
             ShowPanel(welcomePanel);
+        }
+
+        /// <summary>
+        /// STUDENTS: Loads default process data when the application starts
+        /// This provides immediate usability without requiring manual setup
+        /// </summary>
+        private void LoadDefaultProcessData()
+        {
+            // Populate with 5 default processes for immediate testing
+            for (int i = 0; i < 5; i++)
+            {
+                DataRow row = processTable.NewRow();
+                row["Process ID"] = $"P{i + 1}";
+                row["Burst Time"] = new int[] { 6, 8, 7, 3, 4 }[i]; // Interesting mix for learning
+                row["Priority"] = i + 1; // Sequential priorities
+                row["Arrival Time"] = new int[] { 0, 2, 4, 6, 8 }[i]; // Staggered arrivals
+                processTable.Rows.Add(row);
+            }
+
+            // Set the process count text to match
+            txtProcess.Text = "5";
+            
+            // Set combo box to default selection
+            cmbLoadExample.SelectedIndex = 0;
+        }
+
+        /// <summary>
+        /// STUDENTS: Applies dark or light theme to all UI elements
+        /// This provides a modern interface that's easier on the eyes
+        /// </summary>
+        private void ApplyTheme()
+        {
+            if (isDarkMode)
+            {
+                ApplyDarkTheme();
+                btnDarkModeToggle.Text = "☀️ Light Mode";
+            }
+            else
+            {
+                ApplyLightTheme();
+                btnDarkModeToggle.Text = "🌙 Dark Mode";
+            }
+        }
+
+        /// <summary>
+        /// STUDENTS: Applies dark theme colors to all UI components
+        /// </summary>
+        private void ApplyDarkTheme()
+        {
+            // Main form background
+            this.BackColor = Color.FromArgb(45, 45, 48);
+            
+            // Sidebar panel
+            panel1.BackColor = Color.FromArgb(37, 37, 38);
+            sidePanel.BackColor = Color.FromArgb(0, 122, 204); // Blue accent
+            
+            // All sidebar buttons
+            ApplyDarkThemeToButton(btnWelcome);
+            ApplyDarkThemeToButton(btnCpuScheduler);
+            ApplyDarkThemeToButton(btnDashBoard);
+            ApplyDarkThemeToButton(btnAbout);
+            ApplyDarkThemeToButton(btnDarkModeToggle);
+            
+            // Restart label
+            restartApp.BackColor = Color.FromArgb(37, 37, 38);
+            restartApp.ForeColor = Color.FromArgb(241, 241, 241);
+            
+            // Copyright label
+            label1.ForeColor = Color.FromArgb(153, 153, 153);
+            
+            // Content panels
+            contentPanel.BackColor = Color.FromArgb(30, 30, 30);
+            welcomePanel.BackColor = Color.FromArgb(30, 30, 30);
+            schedulerPanel.BackColor = Color.FromArgb(30, 30, 30);
+            resultsPanel.BackColor = Color.FromArgb(30, 30, 30);
+            aboutPanel.BackColor = Color.FromArgb(30, 30, 30);
+            
+            // Text boxes
+            welcomeTextBox.BackColor = Color.FromArgb(37, 37, 38);
+            welcomeTextBox.ForeColor = Color.FromArgb(241, 241, 241);
+            aboutTextBox.BackColor = Color.FromArgb(37, 37, 38);
+            aboutTextBox.ForeColor = Color.FromArgb(241, 241, 241);
+            
+            // Process input controls
+            labelProcess.ForeColor = Color.FromArgb(241, 241, 241);
+            txtProcess.BackColor = Color.FromArgb(51, 51, 55);
+            txtProcess.ForeColor = Color.FromArgb(241, 241, 241);
+            
+            // Data grid
+            processDataGrid.BackgroundColor = Color.FromArgb(37, 37, 38);
+            processDataGrid.DefaultCellStyle.BackColor = Color.FromArgb(51, 51, 55);
+            processDataGrid.DefaultCellStyle.ForeColor = Color.FromArgb(241, 241, 241);
+            processDataGrid.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(45, 45, 48);
+            processDataGrid.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(241, 241, 241);
+            processDataGrid.GridColor = Color.FromArgb(62, 62, 66);
+            
+            // Combo box
+            cmbLoadExample.BackColor = Color.FromArgb(51, 51, 55);
+            cmbLoadExample.ForeColor = Color.FromArgb(241, 241, 241);
+            
+            // ListView (Results)
+            listView1.BackColor = Color.FromArgb(37, 37, 38);
+            listView1.ForeColor = Color.FromArgb(241, 241, 241);
+            
+            // All scheduler buttons with dark theme colors
+            ApplyDarkThemeToSchedulerButton(btnSetProcessCount);
+            ApplyDarkThemeToSchedulerButton(btnGenerateRandom);
+            ApplyDarkThemeToSchedulerButton(btnClearAll);
+            ApplyDarkThemeToSchedulerButton(btnSaveData);
+            ApplyDarkThemeToSchedulerButton(btnLoadData);
+            ApplyDarkThemeToSchedulerButton(btnFCFS);
+            ApplyDarkThemeToSchedulerButton(btnSJF);
+            ApplyDarkThemeToSchedulerButton(btnPriority);
+            ApplyDarkThemeToSchedulerButton(btnRoundRobin);
+        }
+
+        /// <summary>
+        /// STUDENTS: Applies light theme colors to all UI components
+        /// </summary>
+        private void ApplyLightTheme()
+        {
+            // Main form background
+            this.BackColor = SystemColors.Control;
+            
+            // Sidebar panel
+            panel1.BackColor = SystemColors.InactiveBorder;
+            sidePanel.BackColor = Color.SeaGreen;
+            
+            // All sidebar buttons
+            ApplyLightThemeToButton(btnWelcome);
+            ApplyLightThemeToButton(btnCpuScheduler);
+            ApplyLightThemeToButton(btnDashBoard);
+            ApplyLightThemeToButton(btnAbout);
+            ApplyLightThemeToButton(btnDarkModeToggle);
+            
+            // Restart label
+            restartApp.BackColor = SystemColors.InactiveBorder;
+            restartApp.ForeColor = Color.DarkBlue;
+            
+            // Copyright label
+            label1.ForeColor = SystemColors.ControlText;
+            
+            // Content panels
+            contentPanel.BackColor = SystemColors.Control;
+            welcomePanel.BackColor = SystemColors.Control;
+            schedulerPanel.BackColor = SystemColors.Control;
+            resultsPanel.BackColor = SystemColors.Control;
+            aboutPanel.BackColor = SystemColors.Control;
+            
+            // Text boxes
+            welcomeTextBox.BackColor = SystemColors.Window;
+            welcomeTextBox.ForeColor = SystemColors.WindowText;
+            aboutTextBox.BackColor = SystemColors.Window;
+            aboutTextBox.ForeColor = SystemColors.WindowText;
+            
+            // Process input controls
+            labelProcess.ForeColor = SystemColors.ControlText;
+            txtProcess.BackColor = SystemColors.Window;
+            txtProcess.ForeColor = SystemColors.WindowText;
+            
+            // Data grid
+            processDataGrid.BackgroundColor = SystemColors.Window;
+            processDataGrid.DefaultCellStyle.BackColor = SystemColors.Window;
+            processDataGrid.DefaultCellStyle.ForeColor = SystemColors.WindowText;
+            processDataGrid.ColumnHeadersDefaultCellStyle.BackColor = SystemColors.Control;
+            processDataGrid.ColumnHeadersDefaultCellStyle.ForeColor = SystemColors.ControlText;
+            processDataGrid.GridColor = SystemColors.ControlDark;
+            
+            // Combo box
+            cmbLoadExample.BackColor = SystemColors.Window;
+            cmbLoadExample.ForeColor = SystemColors.WindowText;
+            
+            // ListView (Results)
+            listView1.BackColor = SystemColors.Window;
+            listView1.ForeColor = SystemColors.WindowText;
+            
+            // All scheduler buttons with original light colors
+            ApplyLightThemeToSchedulerButton(btnSetProcessCount);
+            ApplyLightThemeToSchedulerButton(btnGenerateRandom);
+            ApplyLightThemeToSchedulerButton(btnClearAll);
+            ApplyLightThemeToSchedulerButton(btnSaveData);
+            ApplyLightThemeToSchedulerButton(btnLoadData);
+            
+            // Algorithm buttons with their original colors
+            btnFCFS.BackColor = Color.Beige;
+            btnSJF.BackColor = Color.AntiqueWhite;
+            btnPriority.BackColor = Color.Bisque;
+            btnRoundRobin.BackColor = Color.PapayaWhip;
+            
+            // Reset text color for algorithm buttons
+            btnFCFS.ForeColor = SystemColors.ControlText;
+            btnSJF.ForeColor = SystemColors.ControlText;
+            btnPriority.ForeColor = SystemColors.ControlText;
+            btnRoundRobin.ForeColor = SystemColors.ControlText;
+        }
+
+        /// <summary>
+        /// STUDENTS: Helper method to apply dark theme to sidebar buttons
+        /// </summary>
+        private void ApplyDarkThemeToButton(Button button)
+        {
+            button.BackColor = Color.FromArgb(37, 37, 38);
+            button.ForeColor = Color.FromArgb(241, 241, 241);
+            button.FlatAppearance.MouseOverBackColor = Color.FromArgb(62, 62, 66);
+        }
+
+        /// <summary>
+        /// STUDENTS: Helper method to apply light theme to sidebar buttons
+        /// </summary>
+        private void ApplyLightThemeToButton(Button button)
+        {
+            button.BackColor = SystemColors.InactiveBorder;
+            button.ForeColor = SystemColors.ControlText;
+            button.FlatAppearance.MouseOverBackColor = SystemColors.ButtonHighlight;
+        }
+
+        /// <summary>
+        /// STUDENTS: Helper method to apply dark theme to scheduler buttons
+        /// </summary>
+        private void ApplyDarkThemeToSchedulerButton(Button button)
+        {
+            button.BackColor = Color.FromArgb(51, 51, 55);
+            button.ForeColor = Color.FromArgb(241, 241, 241);
+            button.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 122, 204);
+        }
+
+        /// <summary>
+        /// STUDENTS: Helper method to apply light theme to scheduler buttons
+        /// </summary>
+        private void ApplyLightThemeToSchedulerButton(Button button)
+        {
+            button.BackColor = SystemColors.ButtonFace;
+            button.ForeColor = SystemColors.ControlText;
+            button.FlatAppearance.MouseOverBackColor = Color.PaleGreen;
         }
 
 
 
         /// <summary>
         /// Executes the Round Robin algorithm.
+        /// STUDENTS: This still uses the old prompt system - update to use DataGrid like FCFS
+        /// Example: var processData = GetProcessDataFromGrid(); var results = RunRoundRobinAlgorithm(processData, quantumTime);
         /// </summary>
         private void RoundRobinButton_Click(object sender, EventArgs e)
         {
             if (int.TryParse(txtProcess.Text, out int processCount) && processCount > 0)
             {
+                // TODO: Replace with DataGrid implementation like FCFS
                 Algorithms.RunRoundRobin(txtProcess.Text);
                 string quantumTime = Helper.QuantumTime;
 
@@ -400,5 +1136,69 @@ Instructions:
         }
 
 
+    }
+
+    /// <summary>
+    /// STUDENTS: Custom button class with rounded edges for modern UI appearance
+    /// You can use this for your custom algorithm buttons to maintain visual consistency
+    /// </summary>
+    public class RoundedButton : Button
+    {
+        private int borderRadius = 10;
+        private Color borderColor = Color.FromArgb(200, 200, 200);
+
+        public int BorderRadius
+        {
+            get { return borderRadius; }
+            set { borderRadius = value; Invalidate(); }
+        }
+
+        public Color BorderColor
+        {
+            get { return borderColor; }
+            set { borderColor = value; Invalidate(); }
+        }
+
+        protected override void OnPaint(PaintEventArgs pevent)
+        {
+            Graphics g = pevent.Graphics;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+            // Create rounded rectangle path
+            GraphicsPath path = new GraphicsPath();
+            Rectangle rect = new Rectangle(0, 0, Width - 1, Height - 1);
+            path.AddArc(rect.X, rect.Y, borderRadius, borderRadius, 180, 90);
+            path.AddArc(rect.X + rect.Width - borderRadius, rect.Y, borderRadius, borderRadius, 270, 90);
+            path.AddArc(rect.X + rect.Width - borderRadius, rect.Y + rect.Height - borderRadius, borderRadius, borderRadius, 0, 90);
+            path.AddArc(rect.X, rect.Y + rect.Height - borderRadius, borderRadius, borderRadius, 90, 90);
+            path.CloseAllFigures();
+
+            // Set button region to rounded shape
+            Region = new Region(path);
+
+            // Fill background
+            using (SolidBrush brush = new SolidBrush(BackColor))
+            {
+                g.FillPath(brush, path);
+            }
+
+            // Draw border
+            using (Pen pen = new Pen(borderColor, 1))
+            {
+                g.DrawPath(pen, path);
+            }
+
+            // Draw text
+            TextRenderer.DrawText(g, Text, Font, ClientRectangle, ForeColor, 
+                TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+
+            path.Dispose();
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            Invalidate();
+        }
     }
 }
