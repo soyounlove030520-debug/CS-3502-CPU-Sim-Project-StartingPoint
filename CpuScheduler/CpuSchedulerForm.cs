@@ -217,12 +217,11 @@ namespace CpuScheduler
         }
 
         /// <summary>
-        /// Begins the fade out sequence and exits the application.
+        /// Exits the application.
         /// </summary>
         private void ExitButton_Click(object sender, EventArgs e)
         {
-            //Application.Exit();
-            timer1.Start();
+            Application.Exit();
         }
 
         /// <summary>
@@ -280,21 +279,6 @@ namespace CpuScheduler
             }
         }
 
-        /// <summary>
-        /// Handles opacity fade out then closes the application.
-        /// </summary>
-        private void FadeOutTimer_Tick(object sender, EventArgs e)
-        {
-            if (Opacity > 0.0)
-            {
-                Opacity -= 0.021;
-            }
-            else
-            {
-                timer1.Stop();
-                Application.Exit();
-            }
-        }
 
     }
 }

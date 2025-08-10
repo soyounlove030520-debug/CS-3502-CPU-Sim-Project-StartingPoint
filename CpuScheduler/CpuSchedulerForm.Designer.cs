@@ -412,7 +412,6 @@
             // 
             // timer1
             //
-            this.timer1.Tick += new System.EventHandler(this.FadeOutTimer_Tick);
             // 
             // CpuSchedulerForm
             // 

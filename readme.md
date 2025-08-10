@@ -1,6 +1,8 @@
 # CPU-Simulator using Windows Forms
 
-This project provides a simple Windows Forms application that demonstrates common CPU scheduling algorithms through an interactive graphical interface. Each algorithm prompts for basic input and displays the resulting waiting or turnaround times using message boxes and on screen tables.
+This project provides a Windows Forms application that demonstrates common CPU scheduling algorithms through an interactive graphical interface. Each algorithm prompts for basic input and displays the resulting waiting or turnaround times using message boxes and on-screen tables.
+
+**Fork maintained by Chris Regan** - Original creator: Francis (used with permission)
 
 ## Project status
 
@@ -18,30 +20,56 @@ Additional algorithms can easily be added by extending `Algorithms.cs`.
 ## Requirements
 
 - Windows operating system
-- .NET Framework 9.0.5 (as referenced in `App.config`) or a compatible runtime
-- Visual Studio 2022 or newer (recommended) or the .NET CLI tools
+- .NET 8.0 SDK or newer
+- Visual Studio 2022 or VS Code with C# extensions
 
 ## How to run
 
-1. Clone the repository using SSH:
+### Using Visual Studio
 
+1. Clone the repository:
    ```bash
    git clone git@github.com:iAmGiG/CS-3502-CPU-Sim-Project-StartingPoint.git
    ```
 
-2. Open `CpuScheduler.sln` in Visual Studio and build the solution. Alternatively, use the .NET CLI:
+2. Open `CpuScheduler.sln` in Visual Studio 2022
+3. Press F5 to build and run the application
 
+### Using VS Code
+
+1. Clone the repository:
    ```bash
-   dotnet build CpuScheduler.sln
+   git clone git@github.com:iAmGiG/CS-3502-CPU-Sim-Project-StartingPoint.git
    ```
 
-3. Run the application:
+2. Install the C# Dev Kit extension in VS Code
 
+3. Open the project folder in VS Code
+
+4. Build and run using the terminal:
    ```bash
+   dotnet build
    dotnet run --project CpuScheduler/CpuScheduler.csproj
    ```
 
-4. Enter the desired number of processes and choose a scheduling algorithm from the interface. The app will prompt for additional values as needed (burst time, priority, quantum time, etc.) and display the results.
+### Using .NET CLI
+
+From the project root directory:
+
+```bash
+# Build the project
+dotnet build
+
+# Run the application
+dotnet run --project CpuScheduler/CpuScheduler.csproj
+```
+
+## Usage
+
+1. Enter the desired number of processes
+2. Choose a scheduling algorithm from the interface
+3. The app will prompt for additional values as needed (burst time, priority, quantum time, etc.)
+4. View the results in the display table showing waiting times and turnaround times
 
 ### License
 
