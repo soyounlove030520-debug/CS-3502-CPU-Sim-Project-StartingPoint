@@ -36,6 +36,7 @@
             this.btnWelcome = new System.Windows.Forms.Button();
             this.btnCpuScheduler = new System.Windows.Forms.Button();
             this.btnDashBoard = new System.Windows.Forms.Button();
+            this.btnAbout = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.contentPanel = new System.Windows.Forms.Panel();
             this.welcomePanel = new System.Windows.Forms.Panel();
@@ -73,6 +74,7 @@
             this.panel1.Controls.Add(this.btnWelcome);
             this.panel1.Controls.Add(this.btnCpuScheduler);
             this.panel1.Controls.Add(this.btnDashBoard);
+            this.panel1.Controls.Add(this.btnAbout);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.restartApp);
             this.panel1.Location = new System.Drawing.Point(1, 1);
@@ -95,11 +97,11 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = false;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 7.5F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(3, 320);
+            this.label1.Location = new System.Drawing.Point(3, 345);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(158, 115);
+            this.label1.Size = new System.Drawing.Size(158, 90);
             this.label1.TabIndex = 3;
-            this.label1.Text = "© 2025.\r\nFork maintained by Chris Regan\r\nfor KSU CS 3502 OS Class\r\n(OwlTech Training Tools)\r\n\r\nCredits to Francis Nweke.\r\n";
+            this.label1.Text = "© 2025.\r\nFork: Chris Regan\r\nKSU CS 3502 OS Class\r\n(OwlTech Training Tools)\r\n\r\nOriginal: Francis Nweke";
             // 
             // btnCpuScheduler
             // 
@@ -168,6 +170,24 @@
             this.btnDashBoard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnDashBoard.UseVisualStyleBackColor = false;
             this.btnDashBoard.Click += new System.EventHandler(this.DashBoardButton_Click);
+            // 
+            // btnAbout
+            // 
+            this.btnAbout.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.btnAbout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnAbout.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAbout.FlatAppearance.BorderColor = System.Drawing.SystemColors.InactiveBorder;
+            this.btnAbout.FlatAppearance.BorderSize = 0;
+            this.btnAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAbout.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAbout.Location = new System.Drawing.Point(11, 270);
+            this.btnAbout.Name = "btnAbout";
+            this.btnAbout.Size = new System.Drawing.Size(150, 40);
+            this.btnAbout.TabIndex = 3;
+            this.btnAbout.Text = "    About";
+            this.btnAbout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAbout.UseVisualStyleBackColor = false;
+            this.btnAbout.Click += new System.EventHandler(this.AboutButton_Click);
             // 
             // contentPanel
             // 
@@ -281,7 +301,7 @@
             this.restartApp.Cursor = System.Windows.Forms.Cursors.Hand;
             this.restartApp.Font = new System.Drawing.Font("Segoe UI", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.restartApp.ForeColor = System.Drawing.Color.DarkBlue;
-            this.restartApp.Location = new System.Drawing.Point(11, 280);
+            this.restartApp.Location = new System.Drawing.Point(11, 315);
             this.restartApp.Name = "restartApp";
             this.restartApp.Size = new System.Drawing.Size(96, 13);
             this.restartApp.TabIndex = 11;
@@ -422,6 +442,7 @@
         private System.Windows.Forms.Button btnWelcome;
         private System.Windows.Forms.Button btnCpuScheduler;
         private System.Windows.Forms.Button btnDashBoard;
+        private System.Windows.Forms.Button btnAbout;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel contentPanel;
         private System.Windows.Forms.Panel welcomePanel;

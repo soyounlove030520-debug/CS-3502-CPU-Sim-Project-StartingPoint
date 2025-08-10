@@ -47,6 +47,16 @@ namespace CpuScheduler
         }
 
         /// <summary>
+        /// Handles About page navigation.
+        /// </summary>
+        private void AboutButton_Click(object sender, EventArgs e)
+        {
+            ShowPanel(aboutPanel);
+            sidePanel.Height = btnAbout.Height;
+            sidePanel.Top = btnAbout.Top;
+        }
+
+        /// <summary>
         /// Shows the specified panel and hides all others.
         /// </summary>
         private void ShowPanel(Panel panelToShow)
@@ -93,7 +103,7 @@ View detailed results from your last algorithm execution:
 Results persist until you run a new simulation.
 
 📚 ABOUT
-Educational content explaining:
+Learn about the algorithms:
 • How each algorithm works
 • When to use each algorithm
 • Learning objectives and concepts
@@ -193,8 +203,10 @@ Instructions:
                 summaryItem.SubItems.Add(processCount + " processes executed");
                 listView1.Items.Add(summaryItem);
                 
-                // Switch to Results panel
+                // Switch to Results panel and update sidebar
                 ShowPanel(resultsPanel);
+                sidePanel.Height = btnDashBoard.Height;
+                sidePanel.Top = btnDashBoard.Top;
             }
             else
             {
@@ -236,8 +248,10 @@ Instructions:
                 summaryItem.SubItems.Add(processCount + " processes executed");
                 listView1.Items.Add(summaryItem);
                 
-                // Switch to Results panel
+                // Switch to Results panel and update sidebar
                 ShowPanel(resultsPanel);
+                sidePanel.Height = btnDashBoard.Height;
+                sidePanel.Top = btnDashBoard.Top;
             }
             else
             {
@@ -279,8 +293,10 @@ Instructions:
                 summaryItem.SubItems.Add(processCount + " processes executed");
                 listView1.Items.Add(summaryItem);
                 
-                // Switch to Results panel
+                // Switch to Results panel and update sidebar
                 ShowPanel(resultsPanel);
+                sidePanel.Height = btnDashBoard.Height;
+                sidePanel.Top = btnDashBoard.Top;
             }
             else
             {
@@ -371,8 +387,10 @@ Instructions:
                 summaryItem.SubItems.Add(processCount + " processes executed");
                 listView1.Items.Add(summaryItem);
                 
-                // Switch to Results panel
+                // Switch to Results panel and update sidebar
                 ShowPanel(resultsPanel);
+                sidePanel.Height = btnDashBoard.Height;
+                sidePanel.Top = btnDashBoard.Top;
             }
             else
             {
