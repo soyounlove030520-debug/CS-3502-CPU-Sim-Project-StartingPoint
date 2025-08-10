@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace CpuScheduler
@@ -9,52 +8,12 @@ namespace CpuScheduler
     /// </summary>
     public partial class CpuSchedulerForm : Form
     {
-        private bool isDragging = false;
-        private Point lastCursor;
-        private Point lastForm;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CpuSchedulerForm"/> class.
         /// </summary>
         public CpuSchedulerForm()
         {
             InitializeComponent();
-            EnableFormDragging();
-        }
-
-        /// <summary>
-        /// Enables dragging the borderless form.
-        /// </summary>
-        private void EnableFormDragging()
-        {
-            MouseDown += Form_MouseDown;
-            MouseMove += Form_MouseMove;
-            MouseUp += Form_MouseUp;
-        }
-
-        private void Form_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                isDragging = true;
-                lastCursor = Cursor.Position;
-                lastForm = Location;
-            }
-        }
-
-        private void Form_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (isDragging)
-            {
-                Point currentCursor = Cursor.Position;
-                Point offset = new Point(currentCursor.X - lastCursor.X, currentCursor.Y - lastCursor.Y);
-                Location = new Point(lastForm.X + offset.X, lastForm.Y + offset.Y);
-            }
-        }
-
-        private void Form_MouseUp(object sender, MouseEventArgs e)
-        {
-            isDragging = false;
         }
 
         /// <summary>
@@ -257,38 +216,6 @@ namespace CpuScheduler
             listView1.GridLines = true;
         }
 
-        /// <summary>
-        /// Exits the application.
-        /// </summary>
-        private void ExitButton_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        /// <summary>
-        /// Minimizes the application window.
-        /// </summary>
-        private void MinimizeButton_Click(object sender, EventArgs e)
-        {
-            WindowState = FormWindowState.Minimized;
-        }
-
-        /// <summary>
-        /// Toggles between maximized and normal window state.
-        /// </summary>
-        private void MaximizeButton_Click(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Maximized)
-            {
-                WindowState = FormWindowState.Normal;
-                btnMaximize.Text = "□";
-            }
-            else
-            {
-                WindowState = FormWindowState.Maximized;
-                btnMaximize.Text = "⧠";
-            }
-        }
 
         /// <summary>
         /// Placeholder event for an unused picture box.
