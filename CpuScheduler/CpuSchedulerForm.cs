@@ -277,6 +277,192 @@ Instructions:
         }
 
         /// <summary>
+        /// STUDENTS: SJF algorithm implementation using DataGrid data
+        /// Shortest Job First - selects process with minimum burst time
+        /// </summary>
+        private List<SchedulingResult> RunSJFAlgorithm(List<ProcessData> processes)
+        {
+            var results = new List<SchedulingResult>();
+            var currentTime = 0;
+            var remainingProcesses = processes.ToList();
+            
+            while (remainingProcesses.Count > 0)
+            {
+                // Get processes that have arrived by current time
+                var availableProcesses = remainingProcesses.Where(p => p.ArrivalTime <= currentTime).ToList();
+                
+                if (availableProcesses.Count == 0)
+                {
+                    // No process has arrived yet, jump to next arrival time
+                    currentTime = remainingProcesses.Min(p => p.ArrivalTime);
+                    continue;
+                }
+                
+                // Select process with shortest burst time
+                var nextProcess = availableProcesses.OrderBy(p => p.BurstTime).ThenBy(p => p.ArrivalTime).First();
+                
+                var startTime = Math.Max(currentTime, nextProcess.ArrivalTime);
+                var finishTime = startTime + nextProcess.BurstTime;
+                var waitingTime = startTime - nextProcess.ArrivalTime;
+                var turnaroundTime = finishTime - nextProcess.ArrivalTime;
+                
+                results.Add(new SchedulingResult
+                {
+                    ProcessID = nextProcess.ProcessID,
+                    ArrivalTime = nextProcess.ArrivalTime,
+                    BurstTime = nextProcess.BurstTime,
+                    StartTime = startTime,
+                    FinishTime = finishTime,
+                    WaitingTime = waitingTime,
+                    TurnaroundTime = turnaroundTime
+                });
+                
+                currentTime = finishTime;
+                remainingProcesses.Remove(nextProcess);
+            }
+            
+            return results.OrderBy(r => r.StartTime).ToList();
+        }
+
+        /// <summary>
+        /// STUDENTS: Priority algorithm implementation using DataGrid data
+        /// Higher priority number = higher priority (1 is lowest, higher numbers are higher priority)
+        /// </summary>
+        private List<SchedulingResult> RunPriorityAlgorithm(List<ProcessData> processes)
+        {
+            var results = new List<SchedulingResult>();
+            var currentTime = 0;
+            var remainingProcesses = processes.ToList();
+            
+            while (remainingProcesses.Count > 0)
+            {
+                // Get processes that have arrived by current time
+                var availableProcesses = remainingProcesses.Where(p => p.ArrivalTime <= currentTime).ToList();
+                
+                if (availableProcesses.Count == 0)
+                {
+                    // No process has arrived yet, jump to next arrival time
+                    currentTime = remainingProcesses.Min(p => p.ArrivalTime);
+                    continue;
+                }
+                
+                // Select process with highest priority (highest number)
+                var nextProcess = availableProcesses.OrderByDescending(p => p.Priority).ThenBy(p => p.ArrivalTime).First();
+                
+                var startTime = Math.Max(currentTime, nextProcess.ArrivalTime);
+                var finishTime = startTime + nextProcess.BurstTime;
+                var waitingTime = startTime - nextProcess.ArrivalTime;
+                var turnaroundTime = finishTime - nextProcess.ArrivalTime;
+                
+                results.Add(new SchedulingResult
+                {
+                    ProcessID = nextProcess.ProcessID,
+                    ArrivalTime = nextProcess.ArrivalTime,
+                    BurstTime = nextProcess.BurstTime,
+                    StartTime = startTime,
+                    FinishTime = finishTime,
+                    WaitingTime = waitingTime,
+                    TurnaroundTime = turnaroundTime
+                });
+                
+                currentTime = finishTime;
+                remainingProcesses.Remove(nextProcess);
+            }
+            
+            return results.OrderBy(r => r.StartTime).ToList();
+        }
+
+        /// <summary>
+        /// STUDENTS: Round Robin algorithm implementation using DataGrid data
+        /// Each process gets a time quantum, then cycles to next process
+        /// </summary>
+        private List<SchedulingResult> RunRoundRobinAlgorithm(List<ProcessData> processes, int quantumTime = 4)
+        {
+            var results = new List<SchedulingResult>();
+            var currentTime = 0;
+            var processQueue = new Queue<ProcessData>();
+            var processResults = new Dictionary<string, SchedulingResult>();
+            var remainingBurstTimes = new Dictionary<string, int>();
+            
+            // Initialize remaining burst times and results
+            foreach (var process in processes)
+            {
+                remainingBurstTimes[process.ProcessID] = process.BurstTime;
+                processResults[process.ProcessID] = new SchedulingResult
+                {
+                    ProcessID = process.ProcessID,
+                    ArrivalTime = process.ArrivalTime,
+                    BurstTime = process.BurstTime,
+                    StartTime = -1, // Will be set on first execution
+                    FinishTime = 0,
+                    WaitingTime = 0,
+                    TurnaroundTime = 0
+                };
+            }
+            
+            // Add processes that arrive at time 0
+            foreach (var process in processes.Where(p => p.ArrivalTime <= currentTime).OrderBy(p => p.ArrivalTime))
+            {
+                processQueue.Enqueue(process);
+            }
+            
+            var processesNotInQueue = processes.Where(p => p.ArrivalTime > currentTime).OrderBy(p => p.ArrivalTime).ToList();
+            
+            while (processQueue.Count > 0 || processesNotInQueue.Count > 0)
+            {
+                // Add any processes that have now arrived
+                while (processesNotInQueue.Count > 0 && processesNotInQueue[0].ArrivalTime <= currentTime)
+                {
+                    processQueue.Enqueue(processesNotInQueue[0]);
+                    processesNotInQueue.RemoveAt(0);
+                }
+                
+                if (processQueue.Count == 0)
+                {
+                    // No processes in queue, jump to next arrival
+                    currentTime = processesNotInQueue[0].ArrivalTime;
+                    continue;
+                }
+                
+                var currentProcess = processQueue.Dequeue();
+                var result = processResults[currentProcess.ProcessID];
+                
+                // Set start time if this is the first execution
+                if (result.StartTime == -1)
+                {
+                    result.StartTime = currentTime;
+                }
+                
+                // Execute for quantum time or remaining burst time, whichever is smaller
+                var executionTime = Math.Min(quantumTime, remainingBurstTimes[currentProcess.ProcessID]);
+                currentTime += executionTime;
+                remainingBurstTimes[currentProcess.ProcessID] -= executionTime;
+                
+                // Add any processes that arrived during this execution
+                while (processesNotInQueue.Count > 0 && processesNotInQueue[0].ArrivalTime <= currentTime)
+                {
+                    processQueue.Enqueue(processesNotInQueue[0]);
+                    processesNotInQueue.RemoveAt(0);
+                }
+                
+                // Check if process is completed
+                if (remainingBurstTimes[currentProcess.ProcessID] == 0)
+                {
+                    result.FinishTime = currentTime;
+                    result.TurnaroundTime = result.FinishTime - result.ArrivalTime;
+                    result.WaitingTime = result.TurnaroundTime - result.BurstTime;
+                }
+                else
+                {
+                    // Process not completed, add back to queue
+                    processQueue.Enqueue(currentProcess);
+                }
+            }
+            
+            return processResults.Values.OrderBy(r => r.StartTime).ToList();
+        }
+
+        /// <summary>
         /// STUDENTS: Data structure for algorithm results
         /// Use this to store and display scheduling algorithm outcomes
         /// </summary>
@@ -671,40 +857,20 @@ Instructions:
         }
 
         /// <summary>
-        /// Executes the Shortest Job First algorithm.
-        /// STUDENTS: This still uses the old prompt system - update to use DataGrid like FCFS
-        /// Example: var processData = GetProcessDataFromGrid(); var results = RunSJFAlgorithm(processData);
+        /// Executes the Shortest Job First algorithm using DataGrid data.
+        /// STUDENTS: Updated to use GetProcessDataFromGrid() instead of prompts
+        /// Use this pattern for your custom algorithm implementations
         /// </summary>
         private void ShortestJobFirstButton_Click(object sender, EventArgs e)
         {
-            if (int.TryParse(txtProcess.Text, out int processCount) && processCount > 0)
+            var processData = GetProcessDataFromGrid();
+            if (processData.Count > 0)
             {
-                // TODO: Replace with DataGrid implementation like FCFS
-                Algorithms.RunShortestJobFirst(txtProcess.Text);
+                // STUDENTS: Updated implementation using DataGrid data
+                var results = RunSJFAlgorithm(processData);
 
-                // Update Results tab
-                listView1.Clear();
-                listView1.View = View.Details;
-
-                listView1.Columns.Add("Process ID", 150, HorizontalAlignment.Center);
-                listView1.Columns.Add("Algorithm", 120, HorizontalAlignment.Center);
-                listView1.Columns.Add("Status", 100, HorizontalAlignment.Center);
-
-                for (int i = 0; i < processCount; i++)
-                {
-                    var item = new ListViewItem();
-                    item.Text = "Process " + (i + 1);
-                    item.SubItems.Add("SJF");
-                    item.SubItems.Add("Completed");
-                    listView1.Items.Add(item);
-                }
-
-                // Add summary
-                var summaryItem = new ListViewItem();
-                summaryItem.Text = "Summary";
-                summaryItem.SubItems.Add("Shortest Job First");
-                summaryItem.SubItems.Add(processCount + " processes executed");
-                listView1.Items.Add(summaryItem);
+                // Update Results tab with detailed scheduling results
+                DisplaySchedulingResults(results, "SJF - Shortest Job First");
                 
                 // Switch to Results panel and update sidebar
                 ShowPanel(resultsPanel);
@@ -713,46 +879,27 @@ Instructions:
             }
             else
             {
-                MessageBox.Show("Enter a valid number of processes", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please set process count and ensure the data grid has process data.", 
+                    "No Process Data", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtProcess.Focus();
             }
         }
 
         /// <summary>
-        /// Executes the Priority algorithm.
-        /// STUDENTS: This still uses the old prompt system - update to use DataGrid like FCFS
-        /// Example: var processData = GetProcessDataFromGrid(); var results = RunPriorityAlgorithm(processData);
+        /// Executes the Priority algorithm using DataGrid data.
+        /// STUDENTS: Updated to use GetProcessDataFromGrid() instead of prompts
+        /// Higher priority numbers = higher priority (1=lowest, higher numbers=higher priority)
         /// </summary>
         private void PriorityButton_Click(object sender, EventArgs e)
         {
-            if (int.TryParse(txtProcess.Text, out int processCount) && processCount > 0)
+            var processData = GetProcessDataFromGrid();
+            if (processData.Count > 0)
             {
-                // TODO: Replace with DataGrid implementation like FCFS
-                Algorithms.RunPriorityScheduling(txtProcess.Text);
+                // STUDENTS: Updated implementation using DataGrid data
+                var results = RunPriorityAlgorithm(processData);
 
-                // Update Results tab
-                listView1.Clear();
-                listView1.View = View.Details;
-
-                listView1.Columns.Add("Process ID", 150, HorizontalAlignment.Center);
-                listView1.Columns.Add("Algorithm", 120, HorizontalAlignment.Center);
-                listView1.Columns.Add("Status", 100, HorizontalAlignment.Center);
-
-                for (int i = 0; i < processCount; i++)
-                {
-                    var item = new ListViewItem();
-                    item.Text = "Process " + (i + 1);
-                    item.SubItems.Add("Priority");
-                    item.SubItems.Add("Completed");
-                    listView1.Items.Add(item);
-                }
-
-                // Add summary
-                var summaryItem = new ListViewItem();
-                summaryItem.Text = "Summary";
-                summaryItem.SubItems.Add("Priority Scheduling");
-                summaryItem.SubItems.Add(processCount + " processes executed");
-                listView1.Items.Add(summaryItem);
+                // Update Results tab with detailed scheduling results
+                DisplaySchedulingResults(results, "Priority Scheduling (Higher # = Higher Priority)");
                 
                 // Switch to Results panel and update sidebar
                 ShowPanel(resultsPanel);
@@ -761,7 +908,8 @@ Instructions:
             }
             else
             {
-                MessageBox.Show("Enter a valid number of processes", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please set process count and ensure the data grid has process data.", 
+                    "No Process Data", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtProcess.Focus();
             }
         }
@@ -1087,50 +1235,44 @@ Instructions:
 
 
         /// <summary>
-        /// Executes the Round Robin algorithm.
-        /// STUDENTS: This still uses the old prompt system - update to use DataGrid like FCFS
-        /// Example: var processData = GetProcessDataFromGrid(); var results = RunRoundRobinAlgorithm(processData, quantumTime);
+        /// Executes the Round Robin algorithm using DataGrid data.
+        /// STUDENTS: Updated to use GetProcessDataFromGrid() instead of prompts
+        /// Each process gets a time quantum (default 4) before switching to next process
         /// </summary>
         private void RoundRobinButton_Click(object sender, EventArgs e)
         {
-            if (int.TryParse(txtProcess.Text, out int processCount) && processCount > 0)
+            var processData = GetProcessDataFromGrid();
+            if (processData.Count > 0)
             {
-                // TODO: Replace with DataGrid implementation like FCFS
-                Algorithms.RunRoundRobin(txtProcess.Text);
-                string quantumTime = Helper.QuantumTime;
-
-                // Update Results tab
-                listView1.Clear();
-                listView1.View = View.Details;
-
-                listView1.Columns.Add("Process ID", 150, HorizontalAlignment.Center);
-                listView1.Columns.Add("Algorithm", 120, HorizontalAlignment.Center);
-                listView1.Columns.Add("Quantum Time", 100, HorizontalAlignment.Center);
-
-                for (int i = 0; i < processCount; i++)
-                {
-                    var item = new ListViewItem();
-                    item.Text = "Process " + (i + 1);
-                    item.SubItems.Add("Round Robin");
-                    item.SubItems.Add(quantumTime);
-                    listView1.Items.Add(item);
-                }
-
-                // Add summary
-                var summaryItem = new ListViewItem();
-                summaryItem.Text = "Summary";
-                summaryItem.SubItems.Add("Round Robin (Q=" + quantumTime + ")");
-                summaryItem.SubItems.Add(processCount + " processes executed");
-                listView1.Items.Add(summaryItem);
+                // Prompt for quantum time - this is algorithm-specific parameter
+                string quantumInput = Microsoft.VisualBasic.Interaction.InputBox(
+                    "Enter quantum time for Round Robin scheduling:", 
+                    "Quantum Time", 
+                    "4");
                 
-                // Switch to Results panel and update sidebar
-                ShowPanel(resultsPanel);
-                sidePanel.Height = btnDashBoard.Height;
-                sidePanel.Top = btnDashBoard.Top;
+                if (int.TryParse(quantumInput, out int quantumTime) && quantumTime > 0)
+                {
+                    // STUDENTS: Updated implementation using DataGrid data
+                    var results = RunRoundRobinAlgorithm(processData, quantumTime);
+
+                    // Update Results tab with detailed scheduling results
+                    DisplaySchedulingResults(results, $"Round Robin (Quantum = {quantumTime})");
+                    
+                    // Switch to Results panel and update sidebar
+                    ShowPanel(resultsPanel);
+                    sidePanel.Height = btnDashBoard.Height;
+                    sidePanel.Top = btnDashBoard.Top;
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid quantum time (positive integer).", 
+                        "Invalid Quantum Time", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
             else
             {
-                MessageBox.Show("Enter a valid number of processes", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please set process count and ensure the data grid has process data.", 
+                    "No Process Data", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtProcess.Focus();
             }
         }
