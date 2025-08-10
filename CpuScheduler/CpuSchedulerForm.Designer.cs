@@ -33,20 +33,18 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.sidePanel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnWelcome = new System.Windows.Forms.Button();
             this.btnCpuScheduler = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnDashBoard = new System.Windows.Forms.Button();
-            this.tabSelection = new System.Windows.Forms.TabControl();
-            this.dashBoardTab = new System.Windows.Forms.TabPage();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.contentPanel = new System.Windows.Forms.Panel();
+            this.welcomePanel = new System.Windows.Forms.Panel();
+            this.welcomeTextBox = new System.Windows.Forms.RichTextBox();
+            this.schedulerPanel = new System.Windows.Forms.Panel();
+            this.resultsPanel = new System.Windows.Forms.Panel();
             this.listView1 = new System.Windows.Forms.ListView();
-            this.progressBar2 = new System.Windows.Forms.ProgressBar();
-            this.label3 = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.label2 = new System.Windows.Forms.Label();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.cpuSchedulerTab = new System.Windows.Forms.TabPage();
+            this.aboutPanel = new System.Windows.Forms.Panel();
+            this.aboutTextBox = new System.Windows.Forms.RichTextBox();
             this.btnRoundRobin = new System.Windows.Forms.Button();
             this.restartApp = new System.Windows.Forms.Label();
             this.btnPriority = new System.Windows.Forms.Button();
@@ -57,23 +55,26 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.tabSelection.SuspendLayout();
-            this.dashBoardTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            this.cpuSchedulerTab.SuspendLayout();
+            this.contentPanel.SuspendLayout();
+            this.welcomePanel.SuspendLayout();
+            this.schedulerPanel.SuspendLayout();
+            this.resultsPanel.SuspendLayout();
+            this.aboutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.panel1.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.sidePanel);
             this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.btnWelcome);
             this.panel1.Controls.Add(this.btnCpuScheduler);
-            this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.btnDashBoard);
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Controls.Add(this.restartApp);
             this.panel1.Location = new System.Drawing.Point(1, 1);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(164, 439);
@@ -91,13 +92,14 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(3, 382);
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.AutoSize = false;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 7.5F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(3, 320);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(125, 52);
+            this.label1.Size = new System.Drawing.Size(158, 115);
             this.label1.TabIndex = 3;
-            this.label1.Text = "© 2024.\r\nAll Rights Reserved.\r\n\r\nCredits to Francis Nweke.\r\n";
+            this.label1.Text = "© 2025.\r\nFork maintained by Chris Regan\r\nfor KSU CS 3502 OS Class\r\n(OwlTech Training Tools)\r\n\r\nCredits to Francis Nweke.\r\n";
             // 
             // btnCpuScheduler
             // 
@@ -108,11 +110,11 @@
             this.btnCpuScheduler.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCpuScheduler.Image = ((System.Drawing.Image)(resources.GetObject("btnCpuScheduler.Image")));
             this.btnCpuScheduler.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCpuScheduler.Location = new System.Drawing.Point(11, 212);
+            this.btnCpuScheduler.Location = new System.Drawing.Point(11, 180);
             this.btnCpuScheduler.Name = "btnCpuScheduler";
             this.btnCpuScheduler.Size = new System.Drawing.Size(150, 40);
             this.btnCpuScheduler.TabIndex = 2;
-            this.btnCpuScheduler.Text = "    CPU Scheduler";
+            this.btnCpuScheduler.Text = "    Scheduler";
             this.btnCpuScheduler.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCpuScheduler.UseVisualStyleBackColor = true;
             this.btnCpuScheduler.Click += new System.EventHandler(this.CpuSchedulerButton_Click);
@@ -129,6 +131,24 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // btnWelcome
+            // 
+            this.btnWelcome.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.btnWelcome.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnWelcome.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnWelcome.FlatAppearance.BorderColor = System.Drawing.SystemColors.InactiveBorder;
+            this.btnWelcome.FlatAppearance.BorderSize = 0;
+            this.btnWelcome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnWelcome.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnWelcome.Location = new System.Drawing.Point(11, 135);
+            this.btnWelcome.Name = "btnWelcome";
+            this.btnWelcome.Size = new System.Drawing.Size(150, 40);
+            this.btnWelcome.TabIndex = 0;
+            this.btnWelcome.Text = "    Welcome";
+            this.btnWelcome.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnWelcome.UseVisualStyleBackColor = false;
+            this.btnWelcome.Click += new System.EventHandler(this.WelcomeButton_Click);
+            // 
             // btnDashBoard
             // 
             this.btnDashBoard.BackColor = System.Drawing.SystemColors.InactiveBorder;
@@ -140,283 +160,258 @@
             this.btnDashBoard.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDashBoard.Image = ((System.Drawing.Image)(resources.GetObject("btnDashBoard.Image")));
             this.btnDashBoard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDashBoard.Location = new System.Drawing.Point(11, 161);
+            this.btnDashBoard.Location = new System.Drawing.Point(11, 225);
             this.btnDashBoard.Name = "btnDashBoard";
             this.btnDashBoard.Size = new System.Drawing.Size(150, 45);
             this.btnDashBoard.TabIndex = 1;
-            this.btnDashBoard.Text = "    Dashboard";
+            this.btnDashBoard.Text = "    Results";
             this.btnDashBoard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnDashBoard.UseVisualStyleBackColor = false;
             this.btnDashBoard.Click += new System.EventHandler(this.DashBoardButton_Click);
             // 
-            // tabSelection
+            // contentPanel
             // 
-            this.tabSelection.Controls.Add(this.dashBoardTab);
-            this.tabSelection.Controls.Add(this.cpuSchedulerTab);
-            this.tabSelection.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabSelection.Location = new System.Drawing.Point(171, 1);
-            this.tabSelection.Name = "tabSelection";
-            this.tabSelection.SelectedIndex = 0;
-            this.tabSelection.Size = new System.Drawing.Size(509, 439);
-            this.tabSelection.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.tabSelection.TabIndex = 1;
+            this.contentPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.contentPanel.Controls.Add(this.welcomePanel);
+            this.contentPanel.Controls.Add(this.schedulerPanel);
+            this.contentPanel.Controls.Add(this.resultsPanel);
+            this.contentPanel.Controls.Add(this.aboutPanel);
+            this.contentPanel.Location = new System.Drawing.Point(171, 1);
+            this.contentPanel.Name = "contentPanel";
+            this.contentPanel.Size = new System.Drawing.Size(509, 439);
+            this.contentPanel.TabIndex = 1;
             // 
-            // dashBoardTab
+            // welcomePanel
             // 
-            this.dashBoardTab.BackColor = System.Drawing.SystemColors.Highlight;
-            this.dashBoardTab.Controls.Add(this.listView1);
-            this.dashBoardTab.Controls.Add(this.progressBar2);
-            this.dashBoardTab.Controls.Add(this.label3);
-            this.dashBoardTab.Controls.Add(this.progressBar1);
-            this.dashBoardTab.Controls.Add(this.label2);
-            this.dashBoardTab.Controls.Add(this.pictureBox3);
-            this.dashBoardTab.Controls.Add(this.pictureBox4);
-            this.dashBoardTab.Controls.Add(this.pictureBox2);
-            this.dashBoardTab.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dashBoardTab.Location = new System.Drawing.Point(4, 22);
-            this.dashBoardTab.Name = "dashBoardTab";
-            this.dashBoardTab.Padding = new System.Windows.Forms.Padding(3);
-            this.dashBoardTab.Size = new System.Drawing.Size(501, 413);
-            this.dashBoardTab.TabIndex = 0;
-            this.dashBoardTab.Text = "Dashboard";
+            this.welcomePanel.BackColor = System.Drawing.SystemColors.Control;
+            this.welcomePanel.Controls.Add(this.welcomeTextBox);
+            this.welcomePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.welcomePanel.Location = new System.Drawing.Point(0, 0);
+            this.welcomePanel.Name = "welcomePanel";
+            this.welcomePanel.Padding = new System.Windows.Forms.Padding(10);
+            this.welcomePanel.Size = new System.Drawing.Size(509, 439);
+            this.welcomePanel.TabIndex = 0;
+            this.welcomePanel.Visible = true;
+            // 
+            // welcomeTextBox
+            // 
+            this.welcomeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.welcomeTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.welcomeTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.welcomeTextBox.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.welcomeTextBox.Location = new System.Drawing.Point(15, 15);
+            this.welcomeTextBox.Name = "welcomeTextBox";
+            this.welcomeTextBox.ReadOnly = true;
+            this.welcomeTextBox.Size = new System.Drawing.Size(479, 409);
+            this.welcomeTextBox.TabIndex = 0;
+            this.welcomeTextBox.Text = "";
+            // 
+            // resultsPanel
+            // 
+            this.resultsPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.resultsPanel.Controls.Add(this.listView1);
+            this.resultsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.resultsPanel.Location = new System.Drawing.Point(0, 0);
+            this.resultsPanel.Name = "resultsPanel";
+            this.resultsPanel.Padding = new System.Windows.Forms.Padding(10);
+            this.resultsPanel.Size = new System.Drawing.Size(509, 439);
+            this.resultsPanel.TabIndex = 0;
+            this.resultsPanel.Visible = true;
             // 
             // listView1
             // 
-            this.listView1.BackColor = System.Drawing.SystemColors.Menu;
-            this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listView1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listView1.BackColor = System.Drawing.SystemColors.Window;
+            this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listView1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listView1.FullRowSelect = true;
+            this.listView1.GridLines = true;
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(75, 64);
+            this.listView1.Location = new System.Drawing.Point(10, 10);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(347, 143);
+            this.listView1.Size = new System.Drawing.Size(481, 393);
             this.listView1.TabIndex = 10;
             this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
             // 
-            // progressBar2
             // 
-            this.progressBar2.Location = new System.Drawing.Point(127, 261);
-            this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(295, 15);
-            this.progressBar2.TabIndex = 9;
+            // schedulerPanel
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(10, 262);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(94, 15);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Memory Usage:";
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(127, 223);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(295, 15);
-            this.progressBar1.TabIndex = 7;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(7, 223);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(100, 15);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "CPU Utilization:";
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.pictureBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.BackgroundImage")));
-            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox3.Location = new System.Drawing.Point(245, 293);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(256, 120);
-            this.pictureBox3.TabIndex = 3;
-            this.pictureBox3.TabStop = false;
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.pictureBox4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox4.BackgroundImage")));
-            this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox4.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(501, 296);
-            this.pictureBox4.TabIndex = 2;
-            this.pictureBox4.TabStop = false;
-            this.pictureBox4.Click += new System.EventHandler(this.PictureBox4_Click);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox2.Location = new System.Drawing.Point(0, 293);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(248, 120);
-            this.pictureBox2.TabIndex = 0;
-            this.pictureBox2.TabStop = false;
-            // 
-            // cpuSchedulerTab
-            // 
-            this.cpuSchedulerTab.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.cpuSchedulerTab.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("cpuSchedulerTab.BackgroundImage")));
-            this.cpuSchedulerTab.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.cpuSchedulerTab.Controls.Add(this.btnRoundRobin);
-            this.cpuSchedulerTab.Controls.Add(this.restartApp);
-            this.cpuSchedulerTab.Controls.Add(this.btnPriority);
-            this.cpuSchedulerTab.Controls.Add(this.btnSJF);
-            this.cpuSchedulerTab.Controls.Add(this.btnFCFS);
-            this.cpuSchedulerTab.Controls.Add(this.txtProcess);
-            this.cpuSchedulerTab.Controls.Add(this.labelProcess);
-            this.cpuSchedulerTab.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cpuSchedulerTab.Location = new System.Drawing.Point(4, 22);
-            this.cpuSchedulerTab.Name = "cpuSchedulerTab";
-            this.cpuSchedulerTab.Padding = new System.Windows.Forms.Padding(3);
-            this.cpuSchedulerTab.Size = new System.Drawing.Size(501, 413);
-            this.cpuSchedulerTab.TabIndex = 1;
-            this.cpuSchedulerTab.Text = "CPU Scheduler";
+            this.schedulerPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.schedulerPanel.Controls.Add(this.btnRoundRobin);
+            this.schedulerPanel.Controls.Add(this.btnPriority);
+            this.schedulerPanel.Controls.Add(this.btnSJF);
+            this.schedulerPanel.Controls.Add(this.btnFCFS);
+            this.schedulerPanel.Controls.Add(this.txtProcess);
+            this.schedulerPanel.Controls.Add(this.labelProcess);
+            this.schedulerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.schedulerPanel.Location = new System.Drawing.Point(0, 0);
+            this.schedulerPanel.Name = "schedulerPanel";
+            this.schedulerPanel.Padding = new System.Windows.Forms.Padding(10);
+            this.schedulerPanel.Size = new System.Drawing.Size(509, 439);
+            this.schedulerPanel.TabIndex = 1;
+            this.schedulerPanel.Visible = false;
             // 
             // btnRoundRobin
             // 
+            this.btnRoundRobin.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnRoundRobin.BackColor = System.Drawing.Color.PapayaWhip;
             this.btnRoundRobin.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRoundRobin.FlatAppearance.MouseOverBackColor = System.Drawing.Color.PaleGreen;
             this.btnRoundRobin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRoundRobin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRoundRobin.Image = ((System.Drawing.Image)(resources.GetObject("btnRoundRobin.Image")));
-            this.btnRoundRobin.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRoundRobin.Location = new System.Drawing.Point(247, 278);
+            this.btnRoundRobin.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRoundRobin.Location = new System.Drawing.Point(270, 220);
             this.btnRoundRobin.Name = "btnRoundRobin";
-            this.btnRoundRobin.Size = new System.Drawing.Size(85, 45);
+            this.btnRoundRobin.Size = new System.Drawing.Size(120, 50);
             this.btnRoundRobin.TabIndex = 12;
-            this.btnRoundRobin.Text = "Round\r\nRobin";
-            this.btnRoundRobin.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRoundRobin.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnRoundRobin.Text = "ROUND ROBIN";
             this.btnRoundRobin.UseVisualStyleBackColor = false;
             this.btnRoundRobin.Click += new System.EventHandler(this.RoundRobinButton_Click);
             // 
             // restartApp
             // 
+            this.restartApp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.restartApp.AutoSize = true;
             this.restartApp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.restartApp.Font = new System.Drawing.Font("Segoe UI", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.restartApp.ForeColor = System.Drawing.Color.Lime;
-            this.restartApp.Location = new System.Drawing.Point(362, 379);
+            this.restartApp.Font = new System.Drawing.Font("Segoe UI", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.restartApp.ForeColor = System.Drawing.Color.DarkBlue;
+            this.restartApp.Location = new System.Drawing.Point(11, 280);
             this.restartApp.Name = "restartApp";
-            this.restartApp.Size = new System.Drawing.Size(113, 15);
+            this.restartApp.Size = new System.Drawing.Size(96, 13);
             this.restartApp.TabIndex = 11;
             this.restartApp.Text = "Restart Application";
             this.restartApp.Click += new System.EventHandler(this.RestartApp_Click);
             // 
             // btnPriority
             // 
+            this.btnPriority.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnPriority.BackColor = System.Drawing.Color.Bisque;
             this.btnPriority.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPriority.FlatAppearance.MouseOverBackColor = System.Drawing.Color.PaleGreen;
             this.btnPriority.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPriority.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPriority.Image = ((System.Drawing.Image)(resources.GetObject("btnPriority.Image")));
-            this.btnPriority.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnPriority.Location = new System.Drawing.Point(347, 278);
+            this.btnPriority.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPriority.Location = new System.Drawing.Point(130, 220);
             this.btnPriority.Name = "btnPriority";
-            this.btnPriority.Size = new System.Drawing.Size(107, 45);
+            this.btnPriority.Size = new System.Drawing.Size(120, 50);
             this.btnPriority.TabIndex = 10;
             this.btnPriority.Text = "PRIORITY";
-            this.btnPriority.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnPriority.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnPriority.UseVisualStyleBackColor = false;
             this.btnPriority.Click += new System.EventHandler(this.PriorityButton_Click);
             // 
             // btnSJF
             // 
+            this.btnSJF.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnSJF.BackColor = System.Drawing.Color.AntiqueWhite;
             this.btnSJF.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSJF.FlatAppearance.MouseOverBackColor = System.Drawing.Color.PaleGreen;
             this.btnSJF.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSJF.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSJF.Image = ((System.Drawing.Image)(resources.GetObject("btnSJF.Image")));
-            this.btnSJF.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSJF.Location = new System.Drawing.Point(115, 278);
+            this.btnSJF.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSJF.Location = new System.Drawing.Point(270, 150);
             this.btnSJF.Name = "btnSJF";
-            this.btnSJF.Size = new System.Drawing.Size(117, 45);
+            this.btnSJF.Size = new System.Drawing.Size(120, 50);
             this.btnSJF.TabIndex = 9;
-            this.btnSJF.Text = "SHORTEST JOB FIRST";
-            this.btnSJF.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSJF.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnSJF.Text = "SJF";
             this.btnSJF.UseVisualStyleBackColor = false;
             this.btnSJF.Click += new System.EventHandler(this.ShortestJobFirstButton_Click);
             // 
             // btnFCFS
             // 
+            this.btnFCFS.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnFCFS.BackColor = System.Drawing.Color.Beige;
             this.btnFCFS.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnFCFS.FlatAppearance.MouseOverBackColor = System.Drawing.Color.PaleGreen;
             this.btnFCFS.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFCFS.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFCFS.Image = ((System.Drawing.Image)(resources.GetObject("btnFCFS.Image")));
-            this.btnFCFS.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnFCFS.Location = new System.Drawing.Point(16, 278);
+            this.btnFCFS.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFCFS.Location = new System.Drawing.Point(130, 150);
             this.btnFCFS.Name = "btnFCFS";
-            this.btnFCFS.Size = new System.Drawing.Size(84, 45);
+            this.btnFCFS.Size = new System.Drawing.Size(120, 50);
             this.btnFCFS.TabIndex = 8;
             this.btnFCFS.Text = "FCFS";
-            this.btnFCFS.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnFCFS.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnFCFS.UseVisualStyleBackColor = false;
             this.btnFCFS.Click += new System.EventHandler(this.FirstComeFirstServeButton_Click);
             // 
             // txtProcess
             // 
-            this.txtProcess.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProcess.Location = new System.Drawing.Point(205, 73);
-            this.txtProcess.Multiline = true;
+            this.txtProcess.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtProcess.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtProcess.Location = new System.Drawing.Point(200, 80);
             this.txtProcess.Name = "txtProcess";
-            this.txtProcess.Size = new System.Drawing.Size(249, 33);
+            this.txtProcess.Size = new System.Drawing.Size(120, 26);
             this.txtProcess.TabIndex = 7;
             this.txtProcess.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtProcess.TextChanged += new System.EventHandler(this.ProcessTextBox_TextChanged);
             // 
             // labelProcess
             // 
+            this.labelProcess.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.labelProcess.AutoSize = true;
-            this.labelProcess.Location = new System.Drawing.Point(29, 91);
+            this.labelProcess.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelProcess.Location = new System.Drawing.Point(180, 50);
             this.labelProcess.Name = "labelProcess";
-            this.labelProcess.Size = new System.Drawing.Size(148, 15);
+            this.labelProcess.Size = new System.Drawing.Size(160, 17);
             this.labelProcess.TabIndex = 6;
             this.labelProcess.Text = "Number of Processes:";
+            // 
+            // aboutPanel
+            // 
+            this.aboutPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.aboutPanel.Controls.Add(this.aboutTextBox);
+            this.aboutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.aboutPanel.Location = new System.Drawing.Point(0, 0);
+            this.aboutPanel.Name = "aboutPanel";
+            this.aboutPanel.Padding = new System.Windows.Forms.Padding(10);
+            this.aboutPanel.Size = new System.Drawing.Size(509, 439);
+            this.aboutPanel.TabIndex = 2;
+            this.aboutPanel.Visible = false;
+            // 
+            // aboutTextBox
+            // 
+            this.aboutTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.aboutTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.aboutTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.aboutTextBox.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aboutTextBox.Location = new System.Drawing.Point(15, 15);
+            this.aboutTextBox.Name = "aboutTextBox";
+            this.aboutTextBox.ReadOnly = true;
+            this.aboutTextBox.Size = new System.Drawing.Size(471, 383);
+            this.aboutTextBox.TabIndex = 0;
+            this.aboutTextBox.Text = "";
             // 
             // timer1
             //
             // 
             // CpuSchedulerForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(681, 439);
-            this.Controls.Add(this.tabSelection);
+            this.Controls.Add(this.contentPanel);
             this.Controls.Add(this.panel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = true;
             this.MinimizeBox = true;
+            this.MinimumSize = new System.Drawing.Size(681, 439);
             this.Name = "CpuSchedulerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.CpuSchedulerForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.tabSelection.ResumeLayout(false);
-            this.dashBoardTab.ResumeLayout(false);
-            this.dashBoardTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            this.cpuSchedulerTab.ResumeLayout(false);
-            this.cpuSchedulerTab.PerformLayout();
+            this.contentPanel.ResumeLayout(false);
+            this.welcomePanel.ResumeLayout(false);
+            this.schedulerPanel.ResumeLayout(false);
+            this.schedulerPanel.PerformLayout();
+            this.resultsPanel.ResumeLayout(false);
+            this.aboutPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -424,14 +419,15 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btnWelcome;
         private System.Windows.Forms.Button btnCpuScheduler;
         private System.Windows.Forms.Button btnDashBoard;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TabControl tabSelection;
-        private System.Windows.Forms.TabPage dashBoardTab;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.TabPage cpuSchedulerTab;
+        private System.Windows.Forms.Panel contentPanel;
+        private System.Windows.Forms.Panel welcomePanel;
+        private System.Windows.Forms.RichTextBox welcomeTextBox;
+        private System.Windows.Forms.Panel schedulerPanel;
+        private System.Windows.Forms.Panel resultsPanel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label restartApp;
         private System.Windows.Forms.Button btnPriority;
@@ -439,14 +435,11 @@
         private System.Windows.Forms.Button btnFCFS;
         public System.Windows.Forms.TextBox txtProcess;
         private System.Windows.Forms.Label labelProcess;
-        private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Panel sidePanel;
-        private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ProgressBar progressBar2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnRoundRobin;
         private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.Panel aboutPanel;
+        private System.Windows.Forms.RichTextBox aboutTextBox;
         private System.Windows.Forms.Timer timer1;
     }
 }
