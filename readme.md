@@ -28,6 +28,7 @@ Additional algorithms can easily be added by extending `Algorithms.cs`.
 ### Using Visual Studio
 
 1. Clone the repository:
+
    ```bash
    git clone git@github.com:iAmGiG/CS-3502-CPU-Sim-Project-StartingPoint.git
    ```
@@ -38,6 +39,7 @@ Additional algorithms can easily be added by extending `Algorithms.cs`.
 ### Using VS Code
 
 1. Clone the repository:
+
    ```bash
    git clone git@github.com:iAmGiG/CS-3502-CPU-Sim-Project-StartingPoint.git
    ```
@@ -46,10 +48,26 @@ Additional algorithms can easily be added by extending `Algorithms.cs`.
 
 3. Open the project folder in VS Code
 
-4. Build and run using the terminal:
+4. **Option A - Using the Debugger (Recommended):**
+   - Press **F5** or go to Run & Debug panel
+   - Select ".NET Core Launch (console)" configuration
+   - This will build and launch the Windows Forms app with debugging support
+
+5. **Option B - Using Terminal (May have termination issues):**
+
    ```bash
    dotnet build
    dotnet run --project CpuScheduler/CpuScheduler.csproj
+   ```
+
+   **Note:** Windows Forms apps may not terminate cleanly in VS Code's integrated terminal
+
+6. **Option C - Run the Built Executable Directly:**
+
+   ```bash
+   dotnet build
+   # Then navigate to: CpuScheduler/bin/Debug/net8.0-windows/CpuScheduler.exe
+   # Double-click the .exe file or run from command prompt
    ```
 
 ### Using .NET CLI
