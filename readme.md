@@ -1,3 +1,10 @@
+This project extends the original CPU scheduling simulator by implementing and testing six algorithms: FCFS, SJF, Priority, Round Robin, SRTF, and HRRN. Each algorithm was applied to a small workload of five processes to compare their performance.
+
+For the small dataset, SJF and SRTF achieved the lowest average waiting and turnaround times (around 5.6 and 11.2 units respectively), showing the most efficient scheduling performance. HRRN also performed well with balanced fairness, while FCFS and Round Robin showed higher waiting and turnaround times. Round Robin achieved the fastest average response time due to time slicing. CPU utilization was consistently 100% for all algorithms, and throughput remained at approximately 0.179 processes per unit time.
+
+Overall, SJF and SRTF demonstrated the best efficiency for small-scale workloads, HRRN showed good fairness without starvation, and Round Robin provided responsive execution at the cost of increased waiting time.
+
+--------------------original 
 # CPU-Simulator using Windows Forms
 
 This project provides a Windows Forms application that demonstrates common CPU scheduling algorithms through an interactive graphical interface. Each algorithm prompts for basic input and displays the resulting waiting or turnaround times using message boxes and on-screen tables.
